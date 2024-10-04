@@ -18,3 +18,24 @@ float Vector3D::MultiplicarEscalar(float escalar) const {
     return(x * escalar, y* escalar, z * escalar);
 }
 
+Vector3D& Vector3D::operator=(const Vector3D& aux) {
+    if (this != &aux) {
+        x = aux.x;
+        y = aux.y;
+        z = aux.z;
+    }
+    return *this;
+}
+
+Vector3D Vector3D::operator+(const Vector3D& aux) const {
+    return Vector3D(x + aux.x, y + aux.y, z + aux.z);
+}
+
+Vector3D Vector3D::operator-(const Vector3D& aux) const {
+    return Vector3D(x - aux.x, y - aux.y, z - aux.z);
+}
+
+Vector3D Vector3D::operator*(float escalar) const {
+    return Vector3D(x * escalar, y * escalar, z * escalar);
+}
+
