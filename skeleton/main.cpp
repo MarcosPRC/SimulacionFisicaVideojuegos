@@ -8,7 +8,6 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
-
 #include <iostream>
 
 std::string display_text = "This is a test";
