@@ -3,7 +3,8 @@
 #include <PxPhysicsAPI.h>
 
 #include <vector>
-
+#include "Vector3D.h"
+#include "Vector3D.cpp"
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
@@ -29,8 +30,11 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
-
-
+//lista items
+RenderItem* centro;
+RenderItem* ejeX;
+RenderItem* ejeY;
+RenderItem* ejeZ;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -54,6 +58,25 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
+
+	//EJES
+	PxSphereGeometry geo;
+	geo.radius = 10;
+	Vector3D v0 = { 0.0f, 0.0f, 0.0f };
+	Vector3D v1 = { 10.0f, 0.0f, 0.0f };
+	Vector3D v2 = { 0.0f, 10.0f, 0.0f };
+	Vector3D v3 = { 0.0f, 0.0f, 10.0f };
+	
+
+	//Crear Shape y centro
+	 PxShape* shape = CreateShape(PxSphereGeometry(1));
+	 ejeX = new RenderItem(shape, new PxTransform(v0.x, v0.y, v0.z), Vector4(1, 1, 1, 1));
+	// Crear el rojo
+	ejeX = new RenderItem(shape, new PxTransform(v1.x, v1.y, v1.z), Vector4(1, 0, 0, 1));
+	// Crear el Verde
+	ejeX = new RenderItem(shape, new PxTransform(v2.x, v2.y, v2.z), Vector4(0, 1, 0, 1));
+	// Crear el azul
+	ejeX = new RenderItem(shape, new PxTransform(v3.x, v3.y, v3.z), Vector4(0, 0, 1, 1));
 	}
 
 
