@@ -1,7 +1,7 @@
 #include <ctype.h>
 
 #include <PxPhysicsAPI.h>
-
+#include "Particle.h"
 #include <vector>
 #include "Vector3D.h"
 #include "Vector3D.cpp"
@@ -34,6 +34,7 @@ RenderItem* centro;
 RenderItem* ejeX;
 RenderItem* ejeY;
 RenderItem* ejeZ;
+Particle* particula;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -69,13 +70,14 @@ void initPhysics(bool interactive)
 
 	//Crear Shape y centro
 	 PxShape* shape = CreateShape(PxSphereGeometry(1));
-	 centro = new RenderItem(shape, new PxTransform(v0.x, v0.y, v0.z), Vector4(1, 1, 1, 1));
+	// centro = new RenderItem(shape, new PxTransform(v0.x, v0.y, v0.z), Vector4(1, 1, 1, 1));
 	// Crear el rojo
-	ejeX = new RenderItem(shape, new PxTransform(v1.x, v1.y, v1.z), Vector4(1, 0, 0, 1));
+	//ejeX = new RenderItem(shape, new PxTransform(v1.x, v1.y, v1.z), Vector4(1, 0, 0, 1));
 	// Crear el Verde
-	ejeY = new RenderItem(shape, new PxTransform(v2.x, v2.y, v2.z), Vector4(0, 1, 0, 1));
+	//ejeY = new RenderItem(shape, new PxTransform(v2.x, v2.y, v2.z), Vector4(0, 1, 0, 1));
 	// Crear el azul
-	ejeZ = new RenderItem(shape, new PxTransform(v3.x, v3.y, v3.z), Vector4(0, 0, 1, 1));
+	//ejeZ = new RenderItem(shape, new PxTransform(v3.x, v3.y, v3.z), Vector4(0, 0, 1, 1));
+	particula = new Particle(new PxTransform(0, 0, 0), Vector3{2,0,0}, Vector3{1,0,0});
 	}
 
 
@@ -85,7 +87,7 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-
+	particula->integrate(t);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 }
