@@ -8,6 +8,7 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
+#include "Proyectil.h"
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -30,11 +31,12 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 //lista items
-RenderItem* centro;
-RenderItem* ejeX;
-RenderItem* ejeY;
-RenderItem* ejeZ;
-Particle* particula;
+RenderItem* centro;//p0
+RenderItem* ejeX;//p0
+RenderItem* ejeY;//p0
+RenderItem* ejeZ;//p0
+Particle* particula;//p1.1
+std::vector<Proyectil*> proyectiles; //p1.2
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -90,6 +92,9 @@ void stepPhysics(bool interactive, double t)
 	particula->integrate(t);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	for (auto proyectil : proyectiles) {
+		proyectil->disparar(t);  // Actualiza la física del proyectil
+	}
 }
 
 // Function to clean data
@@ -97,6 +102,11 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
+
+	for (auto proyectil : proyectiles) {
+		delete proyectil;
+	}
+	proyectiles.clear();
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -119,6 +129,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
+	case 'B':
+	{
+		// Creamos proyectil  desde la camara
+		Vector3 direccionCamara = GetCamera()->getDir();
+		Vector3 posicionIniCamara = { camera.p.x, camera.p.y, camera.p.z };
+
+		// Creamos el proyectil vel inicial y pos de la camara
+		Proyectil* nuevoProyectil = new Proyectil(125.0, 10.0, direccionCamara, posicionIniCamara);
+		proyectiles.push_back(nuevoProyectil);
+		break;
+	}
 	case ' ':
 	{
 		break;
