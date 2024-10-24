@@ -136,7 +136,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		Vector3 posicionIniCamara = { camera.p.x, camera.p.y, camera.p.z };
 
 		// Creamos el proyectil vel inicial y pos de la camara
-		Proyectil* nuevoProyectil = new Proyectil(125.0, 10.0, direccionCamara, posicionIniCamara);
+		Proyectil* nuevoProyectil = new Proyectil(500.0, 10.0, direccionCamara, posicionIniCamara);
 		proyectiles.push_back(nuevoProyectil);
 		break;
 	}
