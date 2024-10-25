@@ -10,6 +10,7 @@
 #include "callbacks.hpp"
 #include "Proyectil.h"
 #include <iostream>
+#include "SistemaParticulas.h"
 
 std::string display_text = "This is a test";
 
@@ -37,6 +38,7 @@ RenderItem* ejeY;//p0
 RenderItem* ejeZ;//p0
 Particle* particula;//p1.1
 std::vector<Proyectil*> proyectiles; //p1.2
+SistemaParticulas* sistemaParticulas;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -79,7 +81,8 @@ void initPhysics(bool interactive)
 	//ejeY = new RenderItem(shape, new PxTransform(v2.x, v2.y, v2.z), Vector4(0, 1, 0, 1));
 	// Crear el azul
 	//ejeZ = new RenderItem(shape, new PxTransform(v3.x, v3.y, v3.z), Vector4(0, 0, 1, 1));
-	particula = new Particle(new PxTransform(0, 0, 0), Vector3{2,0,0}, Vector3{1,0,0});
+	//particula = new Particle(new PxTransform(0, 0, 0), Vector3{2,0,0}, Vector3{1,0,0});
+	 sistemaParticulas = new SistemaParticulas();
 	}
 
 
@@ -89,12 +92,13 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-	particula->integrate(t);
+	//particula->integrate(t);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	for (auto proyectil : proyectiles) {
-		proyectil->disparar(t);  // Actualiza la física del proyectil
-	}
+	sistemaParticulas->update(t);
+	//for (auto proyectil : proyectiles) {
+	//	proyectil->disparar(t);  // Actualiza la física del proyectil
+	//}
 }
 
 // Function to clean data
@@ -103,11 +107,12 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	for (auto proyectil : proyectiles) {
+	/*for (auto proyectil : proyectiles) {
 		delete proyectil;
 	}
-	proyectiles.clear();
-
+	proyectiles.clear();*/
+	delete sistemaParticulas; // Libera el sistema de partículas
+	sistemaParticulas = nullptr;
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
@@ -129,21 +134,32 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
-	case 'B':
-	{
-		// Creamos proyectil  desde la camara
-		Vector3 direccionCamara = GetCamera()->getDir();
-		Vector3 posicionIniCamara = { camera.p.x, camera.p.y, camera.p.z };
+	//case 'B':
+	//{
+	//	// Creamos proyectil  desde la camara
+	//	Vector3 direccionCamara = GetCamera()->getDir();
+	//	Vector3 posicionIniCamara = { camera.p.x, camera.p.y, camera.p.z };
 
-		// Creamos el proyectil vel inicial y pos de la camara
-		Proyectil* nuevoProyectil = new Proyectil(500.0, 10.0, direccionCamara, posicionIniCamara);
-		proyectiles.push_back(nuevoProyectil);
-		break;
-	}
-	case ' ':
+	//	// Creamos el proyectil vel inicial y pos de la camara
+	//	Proyectil* nuevoProyectil = new Proyectil(500.0, 10.0, direccionCamara, posicionIniCamara);
+	//	proyectiles.push_back(nuevoProyectil);
+	//	break;
+	//}
+	/*case ' ':
 	{
 		break;
-	}
+	}*/
+
+	case '1':
+		sistemaParticulas->añadirGenerador('f');
+		//addGenerator()
+		break;
+	case '2':
+		sistemaParticulas->añadirGenerador('g');
+		break;
+	case '3':
+		sistemaParticulas->añadirGenerador('c');
+		break;
 	default:
 		break;
 	}

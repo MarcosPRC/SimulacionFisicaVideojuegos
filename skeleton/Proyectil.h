@@ -24,7 +24,7 @@ public:
         direccion.normalize();
 
         PxTransform* pose = new PxTransform(inicio);  // PxTransform para la posición.
-        particula = new Particle(pose, direccion * velocidadEscalada, Vector3(0, -gravedadEscalada, 0));
+        particula = new Particle(pose, direccion * velocidadEscalada, Vector3(0, -gravedadEscalada, 0),10.0, Vector4(1,1,1,1));
     };
 
     /*void calcularMasaEscalada() {
