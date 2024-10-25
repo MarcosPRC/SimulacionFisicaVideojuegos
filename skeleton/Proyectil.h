@@ -17,7 +17,7 @@ public:
     Proyectil(double velocidadInicial, double masaInicial, Vector3 posicion, Vector3 inicio): masaReal(masaInicial), velocidadReal(velocidadInicial) {
 
         velocidadEscalada = 10.0;  
-        calcularMasaEscalada();   // Calcula la masa escalada.
+        //calcularMasaEscalada();   // Calcula la masa escalada.
         ajustarGravedad();        // Ajusta la gravedad en función de la velocidad
 
         Vector3 direccion = posicion;
@@ -27,9 +27,9 @@ public:
         particula = new Particle(pose, direccion * velocidadEscalada, Vector3(0, -gravedadEscalada, 0));
     };
 
-    void calcularMasaEscalada() {
+    /*void calcularMasaEscalada() {
         masaEscalada = masaReal * (pow(velocidadReal, 2) / pow(velocidadEscalada, 2));
-    }
+    }*/
 
     // ajusta la gravedad escalada segun las velocidades
     void ajustarGravedad() {
