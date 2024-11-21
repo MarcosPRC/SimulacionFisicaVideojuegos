@@ -2,10 +2,11 @@
 #include <iostream>
 #include <math.h>
 
-Particle::Particle(physx::PxTransform* pos, Vector3 vel, Vector3 accel, double vida, Vector4 color) : pose(pos), vel(vel), acceleracion(accel), tiempoVida(vida),Color(color)
+Particle::Particle(physx::PxTransform* pos, Vector3 vel, Vector3 accel, double vida, double m, Vector4 color) : pose(pos), vel(vel), acceleracion(accel), tiempoVida(vida),masaa(m),Color(color)
 {
 	PxShape* shape = CreateShape(PxSphereGeometry(1));
 	renderItem = new RenderItem(shape, pose, Color);
+	fuerza = Vector3(0, 0, 0);
 }
 
 Particle::~Particle()
@@ -17,13 +18,16 @@ Particle::~Particle()
 void Particle::integrate(double t)
 {
 	// Actualiza vel
-	vel += acceleracion * t;
+	//vel += acceleracion * t;
 
 	// Parte 3, aplicamos damping 
 	vel = vel * pow(damping, t);
+	vel += fuerza;
 
 	// Actualiza pos
 	pose->p += vel * t;
+	//std::cout << pose->p.x << std::endl;
+	vel -= fuerza;
 	tiempoExistencia += t;
 }
 

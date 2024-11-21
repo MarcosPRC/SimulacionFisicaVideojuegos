@@ -1,7 +1,7 @@
 #pragma once
 #include "Particle.h"
 
-const double gravedad = 9.8;
+const double gravedad_ = 9.8;
 
 class Proyectil
 {
@@ -24,7 +24,7 @@ public:
         direccion.normalize();
 
         PxTransform* pose = new PxTransform(inicio);  // PxTransform para la posición.
-        particula = new Particle(pose, direccion * velocidadEscalada, Vector3(0, -gravedadEscalada, 0),10.0, Vector4(1,1,1,1));
+        particula = new Particle(pose, direccion * velocidadEscalada, Vector3(0, -gravedadEscalada, 0),10.0, 0.5, Vector4(1,1,1,1));
     };
 
     /*void calcularMasaEscalada() {
@@ -33,7 +33,7 @@ public:
 
     // ajusta la gravedad escalada segun las velocidades
     void ajustarGravedad() {
-        gravedadEscalada = pow(velocidadEscalada, 2) * gravedad / pow(velocidadReal, 2);
+        gravedadEscalada = pow(velocidadEscalada, 2) * gravedad_ / pow(velocidadReal, 2);
     }
 
     void disparar(double tiempo) {

@@ -12,6 +12,7 @@ private:
 	default_random_engine generator;
 	char Tipo;
 public:
+	list<Particle*> GetLparticulas() { return Lparticulas; }
 	GeneradorParticulas(Vector3 pos, char tipo) {
 		Tipo = tipo;
 		posInicial = pos;

@@ -43,7 +43,7 @@ void GeneradorParticulas::crearFuente() {
     Vector3 velMax(2, 40, 2);
     Vector3 velocidad = distribucionUniforme(velMin, velMax);
     physx::PxTransform* nuevaPos = new physx::PxTransform(posInicial.x, posInicial.y, posInicial.z);
-    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 2.0, Vector4(1,0,1,1));
+    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 2.0,1.0, Vector4(1,0,1,1));
     Lparticulas.push_back(nuevaParticula);
 }
 
@@ -52,7 +52,7 @@ void GeneradorParticulas::crearGrifo() {
     Vector3 aceleracion(0, -10.0, 0);
     Vector3 velocidad = distribucionNormal(velocidad, 1.0); 
     physx::PxTransform* nuevaPos = new physx::PxTransform(posVariada.x, posVariada.y, posVariada.z);
-    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 5.0, Vector4(0.7, 0.7, 1, 1));
+    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 5.0, 0.5, Vector4(0.7, 0.7, 1, 1));
     Lparticulas.push_back(nuevaParticula);
 }
 
@@ -65,14 +65,14 @@ void GeneradorParticulas::crearCohete() {
     Vector3 aceleracion(0, -10.0, 0);
     Vector3 velocidad(0, 30.0, 0); 
     physx::PxTransform* nuevaPos = new physx::PxTransform(posInicial.x, posInicial.y, posInicial.z);
-    Particle* cohete = new Particle(nuevaPos, velocidad, aceleracion, 3.0, Vector4(0, 0, 0, 1));
+    Particle* cohete = new Particle(nuevaPos, velocidad, aceleracion, 3.0, 0.5, Vector4(0, 0, 0, 1));
     Lparticulas.push_back(cohete);
     Vector3 posExplosion = cohete->getPosition();
 
         for (int i = 0; i < 150; ++i) {
             Vector3 velocidadExplosion = distribucionNormal(Vector3(10, 10, 10), 5.0);
             physx::PxTransform* nuevaPosExplosion = new physx::PxTransform(posExplosion.x, posExplosion.y, posExplosion.z);
-            Particle* particulaExplosion = new Particle(nuevaPosExplosion, velocidadExplosion, Vector3(0, -10.0, 0), 5.0, Vector4(numeroAleatorioEntre0y1(),numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), 1.0));
+            Particle* particulaExplosion = new Particle(nuevaPosExplosion, velocidadExplosion, Vector3(0, -10.0, 0), 5.0, 0.5, Vector4(numeroAleatorioEntre0y1(),numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), 1.0));
             Lparticulas.push_back(particulaExplosion);
         }
 }

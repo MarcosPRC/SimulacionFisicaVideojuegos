@@ -11,7 +11,8 @@
 #include "Proyectil.h"
 #include <iostream>
 #include "SistemaParticulas.h"
-
+#include "ForceGenerator.h"
+#include "Gravedad.h"
 std::string display_text = "This is a test";
 
 
@@ -39,6 +40,7 @@ RenderItem* ejeZ;//p0
 Particle* particula;//p1.1
 std::vector<Proyectil*> proyectiles; //p1.2
 SistemaParticulas* sistemaParticulas;
+ForceGenerator* gravedad = nullptr;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -83,6 +85,7 @@ void initPhysics(bool interactive)
 	//ejeZ = new RenderItem(shape, new PxTransform(v3.x, v3.y, v3.z), Vector4(0, 0, 1, 1));
 	//particula = new Particle(new PxTransform(0, 0, 0), Vector3{2,0,0}, Vector3{1,0,0});
 	 sistemaParticulas = new SistemaParticulas();
+	 
 	}
 
 
@@ -96,6 +99,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	sistemaParticulas->update(t);
+
 	//for (auto proyectil : proyectiles) {
 	//	proyectil->disparar(t);  // Actualiza la física del proyectil
 	//}
@@ -152,7 +156,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	case '1':
 		sistemaParticulas->añadirGenerador('f');
-		//addGenerator()
 		break;
 	case '2':
 		sistemaParticulas->añadirGenerador('g');
