@@ -12,8 +12,9 @@ public:
 
 	void integrate(double t);
 	double masa() { return masaa; }
-	void apply_force(physx::PxVec3& f) { fuerza = f; }
+	void aplicarFuerza(physx::PxVec3& f) { fuerza = f; }
 	Vector3 getPosition() const;
+	Vector3 getvel() const;
 	bool debeDestruirse(double tiempo);
 
 private:

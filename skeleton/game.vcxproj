@@ -266,6 +266,7 @@
     <ClCompile Include="SistemaFuerzas.cpp" />
     <ClCompile Include="SistemaParticulas.cpp" />
     <ClCompile Include="Vector3D.cpp" />
+    <ClCompile Include="Wind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="SistemaFuerzas.h" />
     <ClInclude Include="SistemaParticulas.h" />
     <ClInclude Include="Vector3D.h" />
+    <ClInclude Include="Wind.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -40,3 +40,6 @@ bool Particle::debeDestruirse(double t) {
 Vector3 Particle::getPosition() const {
 	return Vector3(pose->p.x, pose->p.y, pose->p.z);
 }
+Vector3 Particle::getvel() const {
+	return vel;
+}

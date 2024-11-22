@@ -8,7 +8,7 @@ protected:
 public:
 	ForceGenerator() = default;
 
-	virtual void apply_force() = 0;
-	void register_system(GeneradorParticulas* ps) { partsis.push_back(ps); }
+	virtual void aplicarFuerza() = 0;
+	void registrarSistema(GeneradorParticulas* ps) { partsis.push_back(ps); }
 };
 

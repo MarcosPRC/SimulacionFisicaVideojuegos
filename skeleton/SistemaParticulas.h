@@ -4,6 +4,7 @@
 #include "GeneradorParticulas.h"
 #include "ForceGenerator.h"
 #include "Gravedad.h"
+#include "Wind.h"
 using namespace std;
 class SistemaParticulas
 {
@@ -11,9 +12,12 @@ private:
     vector<GeneradorParticulas*> generadores;
 public:
     ForceGenerator* gravedad = nullptr;
+    ForceGenerator* viento = nullptr;
     GeneradorParticulas* generador = nullptr;
+    
 	SistemaParticulas() {
         gravedad = new Gravedad();
+        viento = new Wind(Vector3(10,0, 0), 0.5f, 0.01f, Vector3(-100, -100, -100), Vector3(100, 100, 100), true);
 	}
     ~SistemaParticulas() {
         for (auto generador : generadores)
@@ -25,7 +29,8 @@ public:
 		for (auto e : generadores) {
 			e->update(tiempo);
 		}
-        gravedad->apply_force();
+        gravedad->aplicarFuerza();
+        viento->aplicarFuerza();
 	}
 
     void añadirGenerador(char l) {
@@ -34,7 +39,8 @@ public:
             borrarGeneradores();
             generador = new GeneradorParticulas(Vector3(0, 0, 0), 'f');
             generadores.push_back(generador);
-            gravedad->register_system(generador);
+            gravedad->registrarSistema(generador);
+            viento->registrarSistema(generador);
             generadores.back()->crearFuente();
             
             break;

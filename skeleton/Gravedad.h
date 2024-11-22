@@ -5,7 +5,7 @@ class Gravedad : public ForceGenerator
 public:
 	Gravedad();
 
-	void apply_force() override;
+	void aplicarFuerza() override;
 
 private:
 	Vector3 gravedad;
