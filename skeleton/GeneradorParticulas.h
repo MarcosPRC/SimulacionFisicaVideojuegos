@@ -34,5 +34,6 @@ public:
 	void crearFuente();
 	void crearGrifo();
 	void crearCohete();
+	void crearExplosion();
 };
 

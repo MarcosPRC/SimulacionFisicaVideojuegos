@@ -11,7 +11,6 @@ void Torbellino::aplicarFuerza() {
                 const Vector3 posicionParticula = p->getPosition();
                 const Vector3 diferencia = posicionParticula - centroTorbellino;
 
-                // Fórmula para la fuerza del torbellino
                 Vector3 fuerzaTorbellino = {
                     -intensidad * (diferencia.z),
                     intensidad * (50 - diferencia.y),

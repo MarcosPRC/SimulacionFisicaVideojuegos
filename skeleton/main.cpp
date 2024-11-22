@@ -163,6 +163,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case '3':
 		sistemaParticulas->añadirGenerador('c');
 		break;
+	case '4':
+		sistemaParticulas->añadirGenerador('e');
+		break;
+	//case 'e':
+		//sistemaParticulas->activarExplosion(Vector3(0, 0, 0));
 	default:
 		break;
 	}

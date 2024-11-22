@@ -77,7 +77,27 @@ void GeneradorParticulas::crearCohete() {
             Lparticulas.push_back(particulaExplosion);
         }
 }
+void GeneradorParticulas::crearExplosion() {
+    physx::PxTransform* nuevaPos = new physx::PxTransform(posInicial.x * (50 * numeroAleatorioEntre0y1()), posInicial.y * (50 * numeroAleatorioEntre0y1()), posInicial.z * (50 * numeroAleatorioEntre0y1()));
+    Particle* particulaExplosion = new Particle(nuevaPos, Vector3(0, 0, 0), Vector3(0, 0, 0), 30.0, numeroAleatorioEntre0y1() + numeroAleatorioEntre0y1(), Vector4(numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), 1.0));
+    Lparticulas.push_back(particulaExplosion);
 
+    physx::PxTransform* nuevaPos1 = new physx::PxTransform(posInicial.x * (50 * numeroAleatorioEntre0y1()), posInicial.y * (50 * numeroAleatorioEntre0y1()), posInicial.z * (50 * numeroAleatorioEntre0y1()));
+    Particle* particulaExplosion1 = new Particle(nuevaPos1, Vector3(0, 0, 0), Vector3(0, 0, 0), 30.0, numeroAleatorioEntre0y1() + numeroAleatorioEntre0y1(), Vector4(numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), 1.0));
+    Lparticulas.push_back(particulaExplosion1);
+
+    physx::PxTransform* nuevaPos2 = new physx::PxTransform(posInicial.x * (50 * numeroAleatorioEntre0y1()), posInicial.y * (50 * numeroAleatorioEntre0y1()), posInicial.z * (50 * numeroAleatorioEntre0y1()));
+    Particle* particulaExplosion2 = new Particle(nuevaPos2, Vector3(0, 0, 0), Vector3(0, 0, 0), 30.0, numeroAleatorioEntre0y1() + numeroAleatorioEntre0y1(), Vector4(numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), 1.0));
+    Lparticulas.push_back(particulaExplosion2);
+
+    physx::PxTransform* nuevaPos3 = new physx::PxTransform(posInicial.x * (50 * numeroAleatorioEntre0y1()), posInicial.y * (50 * numeroAleatorioEntre0y1()), posInicial.z * (50 * numeroAleatorioEntre0y1()));
+    Particle* particulaExplosion3 = new Particle(nuevaPos3, Vector3(0, 0, 0), Vector3(0, 0, 0), 30.0, numeroAleatorioEntre0y1() + numeroAleatorioEntre0y1(), Vector4(numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), 1.0));
+    Lparticulas.push_back(particulaExplosion3);
+
+    physx::PxTransform* nuevaPos4 = new physx::PxTransform(posInicial.x * (50 * numeroAleatorioEntre0y1()), posInicial.y * (50 * numeroAleatorioEntre0y1()), posInicial.z * (50 * numeroAleatorioEntre0y1()));
+    Particle* particulaExplosion4 = new Particle(nuevaPos4, Vector3(0, 0, 0), Vector3(0, 0, 0), 30.0, numeroAleatorioEntre0y1() + numeroAleatorioEntre0y1(), Vector4(numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), 1.0));
+    Lparticulas.push_back(particulaExplosion4);
+}
 void GeneradorParticulas::destruirparticulas(double timepo) {
     for (auto it = Lparticulas.begin(); it != Lparticulas.end();) {
         if ((*it)->debeDestruirse(timepo)) {
