@@ -14,11 +14,9 @@ void Wind::aplicarFuerza() {
                     Vector3 fuerza;
 
                     if (modeloSimple) {
-                        // Modelo simple: solo k1
                         fuerza = k1 * diferenciaVelocidad;
                     }
                     else {
-                        // Modelo avanzado: incluye k2
                         fuerza = k1 * diferenciaVelocidad + k2 * diferenciaVelocidad.magnitude() * diferenciaVelocidad;
                     }
 

@@ -39,11 +39,12 @@ Vector3 GeneradorParticulas::distribucionNormal(Vector3 media, double varianza) 
 //tipos
 void GeneradorParticulas::crearFuente() {
     Vector3 aceleracion(0, -10.0, 0);
-    Vector3 velMin(-2, 10, -2);
-    Vector3 velMax(2, 40, 2);
+    Vector3 velMin(-20, 10, -20);
+    Vector3 velMax(100, 40, 100);
     Vector3 velocidad = distribucionUniforme(velMin, velMax);
+    //Vector3 velocidad = Vector3(100, 30, 0);
     physx::PxTransform* nuevaPos = new physx::PxTransform(posInicial.x, posInicial.y, posInicial.z);
-    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 2.0,1.0, Vector4(1,0,1,1));
+    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 30.0,1.0, Vector4(1,0,1,1));
     Lparticulas.push_back(nuevaParticula);
 }
 

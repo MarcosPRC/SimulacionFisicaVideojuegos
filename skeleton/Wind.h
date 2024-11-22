@@ -9,7 +9,7 @@ public:
     void aplicarFuerza() override;
 
 private:
-    Vector3 velocidadViento; // Velocidad del viento
+    Vector3 velocidadViento;
     float k1, k2;           // Coeficientes de resistencia
     Vector3 areaMinima;      
     Vector3 areaMaxima;
