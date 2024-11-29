@@ -15,7 +15,6 @@
     <ClCompile Include="Proyectil.cpp" />
     <ClCompile Include="SistemaParticulas.cpp" />
     <ClCompile Include="GeneradorParticulas.cpp" />
-    <ClCompile Include="SistemaFuerzas.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="Gravedad.cpp" />
     <ClCompile Include="Wind.cpp" />
@@ -39,7 +38,6 @@
     <ClInclude Include="Proyectil.h" />
     <ClInclude Include="SistemaParticulas.h" />
     <ClInclude Include="GeneradorParticulas.h" />
-    <ClInclude Include="SistemaFuerzas.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="Gravedad.h" />
     <ClInclude Include="Wind.h" />

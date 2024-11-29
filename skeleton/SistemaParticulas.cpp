@@ -14,7 +14,7 @@ void SistemaParticulas::GenerateElasticSpringDemo() {
     muelle2 = true;
 
     Particle* p1e = new Particle(
-        new physx::PxTransform(0.0f, 10.0f, 0.0f), 
+        new physx::PxTransform(10.0f, 10.0f, 0.0f), 
         Vector3(0, 0, 0),                          
         Vector3(0, 0, 0),                          
         10.0,                                       
@@ -23,7 +23,7 @@ void SistemaParticulas::GenerateElasticSpringDemo() {
     );
 
     Particle* p2e = new Particle(
-        new physx::PxTransform(0.0f, 5.0f, 0.0f),  
+        new physx::PxTransform(-10.0f, 10.0f, 0.0f),  
         Vector3(0, 0, 0),                          
         Vector3(0, 0, 0),                          
         10.0,                                       
@@ -31,14 +31,29 @@ void SistemaParticulas::GenerateElasticSpringDemo() {
         Vector4(0.0, 0.0, 1.0, 1.0)                
     );
 
-   
-    ElasticSpringFG* elasticSpring = new ElasticSpringFG(1.0, 10.0, p1e, p2e);
+    SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2e);
+    SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1e);
+    _springParticles.push_back(p1e);
+    _springParticles.push_back(p2e);
 
+    p1e->añadirFuerzas(f1);
+    p2e->añadirFuerzas(f2);
+    //
+    Particle* p3e = new Particle(
+        new physx::PxTransform(-10.0f, 20.0f, 0.0f),
+        Vector3(0, 0, 0),
+        Vector3(0, 0, 0),
+        10.0,
+        0.85,
+        Vector4(0.0, 0.0, 1.0, 1.0)
+    );
 
-    _springParticles.push_back(p1);
-    _springParticles.push_back(p2);
+    ElasticSpringFG* f3 = new ElasticSpringFG(1, 10,{10.0,20.0,0.0});
 
-    _springForceGenerators.push_back(elasticSpring);
+    
+    _springParticles.push_back(p3e);
+    p3e->añadirFuerzas(f3);
+
 }
 void SistemaParticulas::GenerateSpringDemo() {
     muelle1 = true;

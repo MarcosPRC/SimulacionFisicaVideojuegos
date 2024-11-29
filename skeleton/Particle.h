@@ -3,7 +3,7 @@
 #include "RenderUtils.hpp"
 #include <PxPhysicsAPI.h>
 using namespace physx;
-
+class SpringForceGenerator;
 class Particle
 {
 public:
@@ -17,7 +17,7 @@ public:
 	Vector3 getPosition() const;
 	Vector3 getvel() const;
 	bool debeDestruirse(double tiempo);
-
+	void añadirFuerzas(SpringForceGenerator* fuerza);
 private:
 	Vector3 vel;
 	Vector3 fuerza;
@@ -29,5 +29,6 @@ private:
 	double masaa;
 	Vector3 acceleracion;
 	Vector4 Color;
+	SpringForceGenerator* spring;
 };
 

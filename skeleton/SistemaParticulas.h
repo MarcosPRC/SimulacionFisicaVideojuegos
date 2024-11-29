@@ -27,7 +27,7 @@ public:
     SpringForceGenerator* resorte;
     Particle* particula;
     std::vector<Particle*> _springParticles;
-    std::vector<ElasticSpringFG*> _springForceGenerators;
+    std::vector<SpringForceGenerator*>  _springForces;
     bool muelle1 = false; 
     bool muelle2 = false;
     double tiempoRestanteFuerza; // Duracion de la fuerza temporal
@@ -61,12 +61,6 @@ public:
                 tiempoRestanteFuerza -= tiempo;
             }
             particula->integrate(tiempo);
-        }
-        if (muelle2)
-        {
-            for (ElasticSpringFG* springFG : _springForceGenerators) {
-                springFG->actualizarFuerza();  
-            }
         }
         
         //viento->aplicarFuerza();
