@@ -6,16 +6,29 @@
 #include "Gravedad.h"
 #include "Wind.h"
 #include "Torbellino.h"
+#include "Particle.h"
+#include "SpringForceGenerator.h"
 //#include "Explosion.h"
 using namespace std;
 class SistemaParticulas
 {
 private:
     vector<GeneradorParticulas*> generadores;
+    std::vector<Particle*> _springParticles;
+    
 public:
+    Particle* p2;
+    Particle* p1;
+    SpringForceGenerator* _spring1;
+    SpringForceGenerator* _spring2;
     ForceGenerator* gravedad = nullptr;
     ForceGenerator* viento = nullptr;
     ForceGenerator* torbellino = nullptr;
+    SpringForceGenerator* resorte;
+    Particle* particula;
+    bool muelle1 = false;
+    double tiempoRestanteFuerza; // Duracion de la fuerza temporal
+    Vector3 fuerzaTemporal; // Fuerza temporal aplicada
     //Explosion* explosion = nullptr;
     GeneradorParticulas* generador = nullptr;
     
@@ -36,8 +49,19 @@ public:
 			e->update(tiempo);
 		}
         gravedad->aplicarFuerza();
-        viento->aplicarFuerza();
-        torbellino->aplicarFuerza();
+        if (muelle1)
+        {
+           
+            resorte->actualizarFuerza(particula);
+            if (tiempoRestanteFuerza > 0.0) {
+                particula->aplicarFuerza(fuerzaTemporal);
+                tiempoRestanteFuerza -= tiempo;
+            }
+            particula->integrate(tiempo);
+        }
+       
+        //viento->aplicarFuerza();
+        //torbellino->aplicarFuerza();
         /*if (explosion) {
             explosion->aplicarFuerza();
             explosion->actualizarTiempo(static_cast<float>(tiempo));
@@ -82,5 +106,15 @@ public:
         }
     }*/
     void borrarGeneradores();
+    void GenerateSpringDemo();
+    void GenerateSpringDemo2();
+    void SistemaParticulas::aplicarFuerzaTemporal(const Vector3& fuerza, double duracion) {
+        fuerzaTemporal = fuerza;
+        tiempoRestanteFuerza = duracion;
+    }
+
+    void SistemaParticulas::modificarConstanteMuelle(double incremento) {
+        resorte->nuevo_k(resorte->getK() + incremento);
+    }
 };
 

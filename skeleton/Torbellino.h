@@ -7,7 +7,7 @@ class Torbellino : public ForceGenerator {
 public:
         Torbellino(Vector3 centro, Vector3 areaInfluencia, float intensidad);
 
-        void aplicarFuerza() override;
+        void aplicarFuerza() const override;
 
 private:
         Vector3 centroTorbellino; 

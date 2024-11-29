@@ -12,6 +12,7 @@ public:
 
 	void integrate(double t);
 	double masa() { return masaa; }
+	void setMasa(double m){ masaa = m;}
 	void aplicarFuerza(physx::PxVec3& f) { fuerza = f; }
 	Vector3 getPosition() const;
 	Vector3 getvel() const;

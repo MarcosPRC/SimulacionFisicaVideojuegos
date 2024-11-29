@@ -5,7 +5,7 @@ Gravedad::Gravedad()
 	gravedad = Vector3(0, -9.8, 0);
 }
 
-void Gravedad::aplicarFuerza()
+void Gravedad::aplicarFuerza() const
 {
 	for (auto ps : partsis)
 	{

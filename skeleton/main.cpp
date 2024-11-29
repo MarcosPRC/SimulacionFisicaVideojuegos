@@ -166,6 +166,18 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case '4':
 		sistemaParticulas->añadirGenerador('e');
 		break;
+	case '5':
+		sistemaParticulas->GenerateSpringDemo2();
+		break;
+	case 'X': // Aplicar fuerza temporal hacia arriba
+		sistemaParticulas->aplicarFuerzaTemporal(Vector3(0.0f, -50.0f, 0.0f), 0.2); // Fuerza de 50 unidades por 0.2 segundos
+		break;
+	case 'C': // Incrementar constante del resorte
+		sistemaParticulas->modificarConstanteMuelle(1.0); // Aumentar k en 1.0
+		break;
+	case 'V': // Decrementar constante del resorte
+		sistemaParticulas->modificarConstanteMuelle(-1.0); // Reducir k en 1.0
+		break;
 	//case 'e':
 		//sistemaParticulas->activarExplosion(Vector3(0, 0, 0));
 	default:

@@ -4,7 +4,7 @@
 Torbellino::Torbellino(Vector3 centro, Vector3 areaInfluencia, float intensidad)
     : centroTorbellino(centro), areaInfluencia(areaInfluencia), intensidad(intensidad) {}
 
-void Torbellino::aplicarFuerza() {
+void Torbellino::aplicarFuerza() const {
     for (auto ps : partsis) {
         for (auto p : ps->GetLparticulas()) {
             if (estaEnArea(p->getPosition())) {

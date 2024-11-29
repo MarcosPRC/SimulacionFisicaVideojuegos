@@ -266,6 +266,7 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="SistemaFuerzas.cpp" />
     <ClCompile Include="SistemaParticulas.cpp" />
+    <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="Torbellino.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Wind.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="SistemaFuerzas.h" />
     <ClInclude Include="SistemaParticulas.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Torbellino.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Wind.h" />

@@ -6,7 +6,7 @@ class Wind : public ForceGenerator {
 public:
     Wind(Vector3 velocidadViento, float k1, float k2, Vector3 areaMinima, Vector3 areaMaxima, bool modeloSimple = true);
 
-    void aplicarFuerza() override;
+    void aplicarFuerza() const override;
 
 private:
     Vector3 velocidadViento;
