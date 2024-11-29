@@ -20,7 +20,7 @@ void SpringForceGenerator::actualizarFuerza(Particle* particle) const
 }
 
 void SpringForceGenerator::aplicarFuerza() const {
-	// En esta implementación, simplemente actualizamos la fuerza del resorte
+	
 	if (_other) {
 		actualizarFuerza(_other);
 	}

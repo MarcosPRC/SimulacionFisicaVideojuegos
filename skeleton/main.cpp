@@ -167,7 +167,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		sistemaParticulas->añadirGenerador('e');
 		break;
 	case '5':
-		sistemaParticulas->GenerateSpringDemo2();
+		sistemaParticulas->GenerateSpringDemo();
+		break;
+	case '6':
+		sistemaParticulas->GenerateElasticSpringDemo();
 		break;
 	case 'X': // Aplicar fuerza temporal hacia arriba
 		sistemaParticulas->aplicarFuerzaTemporal(Vector3(0.0f, -50.0f, 0.0f), 0.2); // Fuerza de 50 unidades por 0.2 segundos

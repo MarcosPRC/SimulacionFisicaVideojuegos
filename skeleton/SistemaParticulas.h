@@ -8,13 +8,13 @@
 #include "Torbellino.h"
 #include "Particle.h"
 #include "SpringForceGenerator.h"
+#include "ElasticSpringFG.h"
 //#include "Explosion.h"
 using namespace std;
 class SistemaParticulas
 {
 private:
     vector<GeneradorParticulas*> generadores;
-    std::vector<Particle*> _springParticles;
     
 public:
     Particle* p2;
@@ -26,7 +26,10 @@ public:
     ForceGenerator* torbellino = nullptr;
     SpringForceGenerator* resorte;
     Particle* particula;
-    bool muelle1 = false;
+    std::vector<Particle*> _springParticles;
+    std::vector<ElasticSpringFG*> _springForceGenerators;
+    bool muelle1 = false; 
+    bool muelle2 = false;
     double tiempoRestanteFuerza; // Duracion de la fuerza temporal
     Vector3 fuerzaTemporal; // Fuerza temporal aplicada
     //Explosion* explosion = nullptr;
@@ -59,7 +62,13 @@ public:
             }
             particula->integrate(tiempo);
         }
-       
+        if (muelle2)
+        {
+            for (ElasticSpringFG* springFG : _springForceGenerators) {
+                springFG->actualizarFuerza();  
+            }
+        }
+        
         //viento->aplicarFuerza();
         //torbellino->aplicarFuerza();
         /*if (explosion) {
@@ -107,7 +116,8 @@ public:
     }*/
     void borrarGeneradores();
     void GenerateSpringDemo();
-    void GenerateSpringDemo2();
+    void GenerateElasticSpringDemo();
+
     void SistemaParticulas::aplicarFuerzaTemporal(const Vector3& fuerza, double duracion) {
         fuerzaTemporal = fuerza;
         tiempoRestanteFuerza = duracion;
