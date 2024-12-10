@@ -84,8 +84,7 @@ void initPhysics(bool interactive)
 	RenderItem* item;
 	item = new RenderItem(shapee, suelo, {0.8,0.8,0.8,1});
 	//solidorigido
-	SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, PxVec3(-70, 200, -70), PxVec3(0, 5, 0), PxVec3(0, 0, 0), PxVec3(5, 5, 5));
-
+	SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, PxVec3(-70, 200, -70), PxVec3(0, 5, 0), PxVec3(0, 0, 0), PxVec3(5, 5, 5),1.0);
 
 
 
