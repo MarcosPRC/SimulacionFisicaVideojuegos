@@ -266,6 +266,7 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="SistemaParticulas.cpp" />
+    <ClCompile Include="SolidoRigido.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="Torbellino.cpp" />
     <ClCompile Include="Vector3D.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="SistemaParticulas.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Torbellino.h" />
+    <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SolidoRigido.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Wind.h" />
   </ItemGroup>

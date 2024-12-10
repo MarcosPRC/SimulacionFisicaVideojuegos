@@ -13,6 +13,7 @@
 #include "SistemaParticulas.h"
 #include "ForceGenerator.h"
 #include "Gravedad.h"
+#include "SolidoRigido.h"
 std::string display_text = "This is a test";
 
 
@@ -73,6 +74,23 @@ void initPhysics(bool interactive)
 	Vector3D v2 = { 0.0f, 10.0f, 0.0f };
 	Vector3D v3 = { 0.0f, 0.0f, 10.0f };
 	
+	//------PRACTICA SOLIDOSRIGIDOS-------
+	//Generar suelo
+	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
+	PxShape* shapee = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	suelo->attachShape(*shapee);
+	gScene->addActor(*suelo);
+	//pintar suelo
+	RenderItem* item;
+	item = new RenderItem(shapee, suelo, {0.8,0.8,0.8,1});
+	//solidorigido
+	SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, PxVec3(-70, 200, -70), PxVec3(0, 5, 0), PxVec3(0, 0, 0), PxVec3(5, 5, 5));
+
+
+
+
+
+
 
 	//Crear Shape y centro
 	 PxShape* shape = CreateShape(PxSphereGeometry(1));

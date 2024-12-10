@@ -52,7 +52,7 @@ public:
 			e->update(tiempo);
 		}
         gravedad->aplicarFuerza();
-        if (muelle1)
+        /*if (muelle1)
         {
            
             resorte->actualizarFuerza(particula);
@@ -61,7 +61,7 @@ public:
                 tiempoRestanteFuerza -= tiempo;
             }
             particula->integrate(tiempo);
-        }
+        }*/
         
         //viento->aplicarFuerza();
         //torbellino->aplicarFuerza();
