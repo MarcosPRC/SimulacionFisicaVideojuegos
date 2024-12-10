@@ -34,7 +34,7 @@ public:
         gScene->addActor(*actor);
 
         // Crear el item de renderizado
-        renderItem = new RenderItem(shape, actor, { 1.0f, 0.0f, 0.0f, 1.0f }); // Rojo
+        renderItem = new RenderItem(shape, actor, { 0.0f, 1.0f, 0.0f, 1.0f }); // Rojo
     }
 
     // Destructor

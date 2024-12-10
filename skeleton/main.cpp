@@ -14,6 +14,7 @@
 #include "ForceGenerator.h"
 #include "Gravedad.h"
 #include "SolidoRigido.h"
+#include "SistemaSolidoRigido.h"
 std::string display_text = "This is a test";
 
 
@@ -42,6 +43,7 @@ Particle* particula;//p1.1
 std::vector<Proyectil*> proyectiles; //p1.2
 SistemaParticulas* sistemaParticulas;
 ForceGenerator* gravedad = nullptr;
+SistemaSolidoRigido* sistemaSolidos;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -75,18 +77,37 @@ void initPhysics(bool interactive)
 	Vector3D v3 = { 0.0f, 0.0f, 10.0f };
 	
 	//------PRACTICA SOLIDOSRIGIDOS-------
-	//Generar suelo
-	PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
-	PxShape* shapee = CreateShape(PxBoxGeometry(100, 0.1, 100));
-	suelo->attachShape(*shapee);
-	gScene->addActor(*suelo);
-	//pintar suelo
-	RenderItem* item;
-	item = new RenderItem(shapee, suelo, {0.8,0.8,0.8,1});
-	//solidorigido
-	SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, PxVec3(-70, 200, -70), PxVec3(0, 5, 0), PxVec3(0, 0, 0), PxVec3(5, 5, 5),1.0);
+	////Generar suelo
+	//PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
+	//PxShape* shapee = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	//suelo->attachShape(*shapee);
+	//gScene->addActor(*suelo);
+	////pintar suelo
+	//RenderItem* item;
+	//item = new RenderItem(shapee, suelo, {0.8,0.8,0.8,1});
+	////solidorigido
+	//SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, PxVec3(-70, 200, -70), PxVec3(0, 5, 0), PxVec3(0, 0, 0), PxVec3(5, 5, 5),1.0);
 
+	// Crear sistema de sólidos rígidos
+	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics);
 
+	// Crear suelo
+	sistemaSolidos->crearSuelo();
+
+	// Crear obstáculos
+	sistemaSolidos->crearObstaculoEstatico({ 10, 1, 10 }, { 2, 2, 2 });
+	sistemaSolidos->crearObstaculoEstatico({ -10, 1, -10 }, { 2, 2, 2 });
+
+	// Crear sólidos dinámicos
+	/*for (int i = 0; i < 5; ++i) {
+		PxVec3 pos = { float(rand() % 20 - 10), float(5 + rand() % 10), float(rand() % 20 - 10) };
+		PxVec3 dimensiones = { float(rand() % 3 + 1), float(rand() % 3 + 1), float(rand() % 3 + 1) };
+		PxVec3 velInicial = { float(rand() % 5 - 2), float(rand() % 5), float(rand() % 5 - 2) };
+		PxVec3 velAngular = { float(rand() % 3), float(rand() % 3), float(rand() % 3) };
+		PxReal densidad = float(rand() % 10 + 1);
+
+		sistemaSolidos->generarSolidoDinamico(pos, dimensiones, densidad, velInicial, velAngular);
+	}*/
 
 
 
@@ -120,6 +141,15 @@ void stepPhysics(bool interactive, double t)
 	//for (auto proyectil : proyectiles) {
 	//	proyectil->disparar(t);  // Actualiza la física del proyectil
 	//}
+	PxVec3 pos = { float(rand() % 20 - 10), float(5 + rand() % 10), float(rand() % 20 - 10) };
+	PxVec3 dimensiones = { float(rand() % 3 + 1), float(rand() % 3 + 1), float(rand() % 3 + 1) };
+	PxVec3 velInicial = { float(rand() % 5 - 2), float(rand() % 5), float(rand() % 5 - 2) };
+	PxVec3 velAngular = { float(rand() % 3), float(rand() % 3), float(rand() % 3) };
+	PxReal densidad = float(rand() % 10 + 1);
+
+	sistemaSolidos->generarSolidoDinamico(pos, dimensiones, densidad, velInicial, velAngular);
+
+	//sistemaSolidos->borrarCadaCincoSegundos(t);
 }
 
 // Function to clean data
