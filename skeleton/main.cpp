@@ -141,14 +141,18 @@ void stepPhysics(bool interactive, double t)
 	//for (auto proyectil : proyectiles) {
 	//	proyectil->disparar(t);  // Actualiza la física del proyectil
 	//}
-	PxVec3 pos = { float(rand() % 20 - 10), float(5 + rand() % 10), float(rand() % 20 - 10) };
-	PxVec3 dimensiones = { float(rand() % 3 + 1), float(rand() % 3 + 1), float(rand() % 3 + 1) };
-	PxVec3 velInicial = { float(rand() % 5 - 2), float(rand() % 5), float(rand() % 5 - 2) };
-	PxVec3 velAngular = { float(rand() % 3), float(rand() % 3), float(rand() % 3) };
-	PxReal densidad = float(rand() % 10 + 1);
+	
 
-	sistemaSolidos->generarSolidoDinamico(pos, dimensiones, densidad, velInicial, velAngular);
-
+	
+	if (sistemaSolidos->solidosDinamicos.size() < 30)
+	{
+		PxVec3 pos = { float(rand() % 20 - 10), float(5 + rand() % 10), float(rand() % 20 - 10) };
+		PxVec3 dimensiones = { float(rand() % 3 + 1), float(rand() % 3 + 1), float(rand() % 3 + 1) };
+		PxVec3 velInicial = { float(rand() % 5 - 2), float(rand() % 5), float(rand() % 5 - 2) };
+		PxVec3 velAngular = { float(rand() % 3), float(rand() % 3), float(rand() % 3) };
+		PxReal densidad = float(rand() % 10 + 1);
+		sistemaSolidos->generarSolidoDinamico(pos, dimensiones, densidad, velInicial, velAngular);
+	}
 	//sistemaSolidos->borrarCadaCincoSegundos(t);
 }
 

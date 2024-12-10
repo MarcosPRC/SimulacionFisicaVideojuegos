@@ -11,8 +11,9 @@ private:
     PxScene* gScene;
     PxPhysics* gPhysics;
     PxMaterial* materialBase;
-    std::vector<SolidoRigido*> solidosDinamicos;
+    
 public:
+    std::vector<SolidoRigido*> solidosDinamicos;
     SistemaSolidoRigido(PxScene* scene, PxPhysics* physics) : gScene(scene), gPhysics(physics) {
         // Crear material base con coeficientes iniciales
         materialBase = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
