@@ -15,6 +15,7 @@
 #include "Gravedad.h"
 #include "SolidoRigido.h"
 #include "SistemaSolidoRigido.h"
+#include "WindRigid.h"
 std::string display_text = "This is a test";
 
 
@@ -89,7 +90,8 @@ void initPhysics(bool interactive)
 	//SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, PxVec3(-70, 200, -70), PxVec3(0, 5, 0), PxVec3(0, 0, 0), PxVec3(5, 5, 5),1.0);
 
 	// Crear sistema de sólidos rígidos
-	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics);
+	WindRigid* vientoR = new WindRigid({ 100, 0, 0 }, 0.5f, 0.3f, { -500, 0, -500 }, { 500, 500, 500 }, false);
+	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics,vientoR);
 
 	// Crear suelo
 	sistemaSolidos->crearSuelo();
@@ -153,6 +155,7 @@ void stepPhysics(bool interactive, double t)
 		PxReal densidad = float(rand() % 10 + 1);
 		sistemaSolidos->generarSolidoDinamico(pos, dimensiones, densidad, velInicial, velAngular);
 	}
+	sistemaSolidos->aplicarFuerzas();
 	//sistemaSolidos->borrarCadaCincoSegundos(t);
 }
 
@@ -222,6 +225,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case '6':
 		sistemaParticulas->GenerateElasticSpringDemo();
+		break;
+	case '9':
+		sistemaSolidos->toggleViento();
+		cout << "pum";
 		break;
 	case 'X': // Aplicar fuerza temporal hacia arriba
 		sistemaParticulas->aplicarFuerzaTemporal(Vector3(0.0f, -50.0f, 0.0f), 0.2); // Fuerza de 50 unidades por 0.2 segundos

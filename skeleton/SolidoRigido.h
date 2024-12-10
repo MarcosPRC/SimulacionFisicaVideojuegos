@@ -42,6 +42,7 @@ public:
         delete renderItem;
         actor->release();
     }
+    PxRigidDynamic* getActor(){ return actor; }
     Vector3 CalculaTensor(float m) {
         PxGeometryType::Enum tipo = shape->getGeometryType();
         if (tipo == PxGeometryType::eBOX )

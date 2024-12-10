@@ -272,6 +272,7 @@
     <ClCompile Include="Torbellino.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Wind.cpp" />
+    <ClCompile Include="WindRigid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
@@ -293,6 +294,7 @@
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SolidoRigido.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Wind.h" />
+    <ClInclude Include="WindRigid.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

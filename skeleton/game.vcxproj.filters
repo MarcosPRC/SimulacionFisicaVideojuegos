@@ -24,6 +24,7 @@
     <ClCompile Include="ElasticSpringFG.cpp" />
     <ClCompile Include="SolidoRigido.cpp" />
     <ClCompile Include="SistemaSolidoRigido.cpp" />
+    <ClCompile Include="WindRigid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="ElasticSpringFG.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SolidoRigido.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SistemaSolidoRigido.h" />
+    <ClInclude Include="WindRigid.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
