@@ -8,7 +8,7 @@ using namespace physx;
 class WindRigid {
 public:
     WindRigid(Vector3 velocidadViento, float k1, float k2, Vector3 areaMinima, Vector3 areaMaxima, bool modeloSimple)
-        : velocidadViento(velocidadViento), k1(k1), k2(k2), areaMinima(areaMinima), areaMaxima(areaMaxima), modeloSimple(modeloSimple), activo(false) {}
+        : velocidadViento(velocidadViento), k1(k1), k2(k2), areaMinima(areaMinima), areaMaxima(areaMaxima), modeloSimple(modeloSimple), activo(true) {}
 
     // Aplicar fuerza de viento a un sólido rígido
     void aplicarFuerza(PxRigidDynamic* solido) const {

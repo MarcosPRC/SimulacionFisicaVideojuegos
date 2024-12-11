@@ -110,7 +110,7 @@ PxTransform Camera::getTransform() const
 
 void Camera::MueveCamara()
 {
-	mEye += mDir * 0.05f;
+	mEye += mDir * 0.01f;
 }
 
 PxVec3 Camera::getEye() const

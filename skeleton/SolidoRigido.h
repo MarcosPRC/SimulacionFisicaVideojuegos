@@ -13,10 +13,21 @@ private:
     PxShape* shape;
 public:
     // Constructor
-    SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, const PxVec3& position, const PxVec3& linearVelocity, const PxVec3& angularVelocity, const PxVec3& dimensions,double masa) {
+    SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, const PxVec3& position, const PxVec3& linearVelocity, const PxVec3& angularVelocity, const PxVec3& dimensions,double masa, Vector4 color, bool Player) {
         // Crear el actor dinámico
         actor = gPhysics->createRigidDynamic(PxTransform(position));
-
+        
+        // Bloquear todas las rotaciones
+        actor->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, true);
+        actor->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, true);
+        actor->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, true);
+        if (Player)
+        {
+            actor->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_LINEAR_X, true);
+        }
+        else {
+            actor->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, true);
+        }
         // Configurar velocidades
         actor->setLinearVelocity(linearVelocity);
         actor->setAngularVelocity(angularVelocity);
@@ -34,7 +45,7 @@ public:
         gScene->addActor(*actor);
 
         // Crear el item de renderizado
-        renderItem = new RenderItem(shape, actor, { 0.0f, 1.0f, 0.0f, 1.0f }); // Rojo
+        renderItem = new RenderItem(shape, actor,color);
     }
 
     // Destructor
@@ -42,6 +53,28 @@ public:
         delete renderItem;
         actor->release();
     }
+    void moverDerecha(float velocidad) {
+        PxVec3 posicion = actor->getGlobalPose().p;
+        if (posicion.z > -17) { // Verificar límite derecho
+            actor->setLinearVelocity(PxVec3( 0, 0, -velocidad));
+        }
+        else {
+            detener(); // Detener si llega al límite
+        }
+    }
+    void detener() {
+        actor->setLinearVelocity(PxVec3(0, 0, 0));
+    }
+    void moverIzquierda(float velocidad) {
+        PxVec3 posicion = actor->getGlobalPose().p;
+        if (posicion.z < 17) { // Verificar límite izquierdo
+            actor->setLinearVelocity(PxVec3( 0, 0, velocidad));
+        }
+        else {
+            detener(); // Detener si llega al límite
+        }
+    }
+
     PxRigidDynamic* getActor(){ return actor; }
     Vector3 CalculaTensor(float m) {
         PxGeometryType::Enum tipo = shape->getGeometryType();

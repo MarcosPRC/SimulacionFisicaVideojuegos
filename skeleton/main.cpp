@@ -76,13 +76,27 @@ void initPhysics(bool interactive)
 	Vector3D v1 = { 10.0f, 0.0f, 0.0f };
 	Vector3D v2 = { 0.0f, 10.0f, 0.0f };
 	Vector3D v3 = { 0.0f, 0.0f, 10.0f };
+
+
+
 	//---------------------------PRACTICA FINAL---------------------------
-	WindRigid* vientoR = new WindRigid({ 100, 0, 0 }, 0.5f, 0.3f, { -500, 0, -500 }, { 500, 500, 500 }, false);
+	WindRigid* vientoR = new WindRigid({300 , 0,0 }, 0.5f, 0.3f, { -500000, 0, -5000000 }, { 500000, 500, 5000000 }, true);
 	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics,vientoR);
 	sistemaSolidos->crearSuelo();
+	PxVec3 posicionInicial = { 90, 2, 0 };   // Altura inicial para evitar colisión inmediata
+	PxVec3 dimensiones = { 1.5,2, 1.5 };        // Dimensiones del cubo
+	PxVec3 velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
+	PxVec3 velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
+	PxReal densidad = 1.0f;                  // Densidad del material
 
+	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({1,1,0,1}), true);
 
+	PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 35.0f };
+	PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };
+	float distanciaMinima = 12.0f; // Distancia mínima entre obstáculos
+	Vector4 color = { 0.0f, 1.0f, 0.0f, 1.0f };
 
+	sistemaSolidos->generarObstaculosConDistancia(dimensionesPlano, dimensionesObstaculo, distanciaMinima, densidad, color);
 	//------PRACTICA SOLIDOSRIGIDOS-------
 	////Generar suelo
 	//PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
@@ -145,7 +159,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	sistemaParticulas->update(t);
-	GetCamera()->MueveCamara();
+	//GetCamera()->MueveCamara();
 
 	//for (auto proyectil : proyectiles) {
 	//	proyectil->disparar(t);  // Actualiza la física del proyectil
@@ -160,8 +174,8 @@ void stepPhysics(bool interactive, double t)
 		PxVec3 velAngular = { float(rand() % 3), float(rand() % 3), float(rand() % 3) };
 		PxReal densidad = float(rand() % 10 + 1);
 		sistemaSolidos->generarSolidoDinamico(pos, dimensiones, densidad, velInicial, velAngular);
-	}
-	sistemaSolidos->aplicarFuerzas();*/
+	}*/
+	sistemaSolidos->aplicarFuerzas();
 	//sistemaSolidos->borrarCadaCincoSegundos(t);
 }
 
@@ -245,9 +259,16 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'V': // Decrementar constante del resorte
 		sistemaParticulas->modificarConstanteMuelle(-1.0); // Reducir k en 1.0
 		break;
+	case 'L':
+		sistemaSolidos->player[0]->moverIzquierda(10.0f);
+		break;
+	case 'R':
+		sistemaSolidos->player[0]->moverDerecha(10.0f);
+		break;
 	//case 'e':
 		//sistemaParticulas->activarExplosion(Vector3(0, 0, 0));
 	default:
+		sistemaSolidos->player[0]->detener();
 		break;
 	}
 }
