@@ -21,7 +21,7 @@ public:
         actor->setLinearVelocity(linearVelocity);
         actor->setAngularVelocity(angularVelocity);
 
-        // Crear la forma del objeto (cubo)
+        // Crear la forma del objeto
         shape = CreateShape(PxBoxGeometry(dimensions.x, dimensions.y, dimensions.z));
         actor->attachShape(*shape);
 

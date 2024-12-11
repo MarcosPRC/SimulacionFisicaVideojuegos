@@ -68,6 +68,7 @@ bool Camera::handleKey(unsigned char key, int x, int y, float speed)
 	case 'D':	mEye += viewY*2.0f*speed;		break;
 	default:							return false;
 	}
+	
 	return true;
 }
 
@@ -105,6 +106,11 @@ PxTransform Camera::getTransform() const
 
 	PxMat33 m(mDir.cross(viewY), viewY, -mDir);
 	return PxTransform(mEye, PxQuat(m));
+}
+
+void Camera::MueveCamara()
+{
+	mEye += mDir * 0.05f;
 }
 
 PxVec3 Camera::getEye() const

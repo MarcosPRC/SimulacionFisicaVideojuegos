@@ -76,7 +76,13 @@ void initPhysics(bool interactive)
 	Vector3D v1 = { 10.0f, 0.0f, 0.0f };
 	Vector3D v2 = { 0.0f, 10.0f, 0.0f };
 	Vector3D v3 = { 0.0f, 0.0f, 10.0f };
-	
+	//---------------------------PRACTICA FINAL---------------------------
+	WindRigid* vientoR = new WindRigid({ 100, 0, 0 }, 0.5f, 0.3f, { -500, 0, -500 }, { 500, 500, 500 }, false);
+	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics,vientoR);
+	sistemaSolidos->crearSuelo();
+
+
+
 	//------PRACTICA SOLIDOSRIGIDOS-------
 	////Generar suelo
 	//PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
@@ -90,15 +96,15 @@ void initPhysics(bool interactive)
 	//SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, PxVec3(-70, 200, -70), PxVec3(0, 5, 0), PxVec3(0, 0, 0), PxVec3(5, 5, 5),1.0);
 
 	// Crear sistema de sólidos rígidos
-	WindRigid* vientoR = new WindRigid({ 100, 0, 0 }, 0.5f, 0.3f, { -500, 0, -500 }, { 500, 500, 500 }, false);
-	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics,vientoR);
+	//WindRigid* vientoR = new WindRigid({ 100, 0, 0 }, 0.5f, 0.3f, { -500, 0, -500 }, { 500, 500, 500 }, false);
+	//sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics,vientoR);
 
 	// Crear suelo
-	sistemaSolidos->crearSuelo();
+	//sistemaSolidos->crearSuelo();
 
 	// Crear obstáculos
-	sistemaSolidos->crearObstaculoEstatico({ 10, 1, 10 }, { 2, 2, 2 });
-	sistemaSolidos->crearObstaculoEstatico({ -10, 1, -10 }, { 2, 2, 2 });
+	//sistemaSolidos->crearObstaculoEstatico({ 10, 1, 10 }, { 2, 2, 2 });
+	//sistemaSolidos->crearObstaculoEstatico({ -10, 1, -10 }, { 2, 2, 2 });
 
 	// Crear sólidos dinámicos
 	/*for (int i = 0; i < 5; ++i) {
@@ -139,14 +145,14 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	sistemaParticulas->update(t);
+	GetCamera()->MueveCamara();
 
 	//for (auto proyectil : proyectiles) {
 	//	proyectil->disparar(t);  // Actualiza la física del proyectil
 	//}
-	
 
 	
-	if (sistemaSolidos->solidosDinamicos.size() < 30)
+	/*if (sistemaSolidos->solidosDinamicos.size() < 30)
 	{
 		PxVec3 pos = { float(rand() % 20 - 10), float(5 + rand() % 10), float(rand() % 20 - 10) };
 		PxVec3 dimensiones = { float(rand() % 3 + 1), float(rand() % 3 + 1), float(rand() % 3 + 1) };
@@ -155,7 +161,7 @@ void stepPhysics(bool interactive, double t)
 		PxReal densidad = float(rand() % 10 + 1);
 		sistemaSolidos->generarSolidoDinamico(pos, dimensiones, densidad, velInicial, velAngular);
 	}
-	sistemaSolidos->aplicarFuerzas();
+	sistemaSolidos->aplicarFuerzas();*/
 	//sistemaSolidos->borrarCadaCincoSegundos(t);
 }
 
@@ -227,7 +233,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		sistemaParticulas->GenerateElasticSpringDemo();
 		break;
 	case '9':
-		sistemaSolidos->toggleViento();
+		//sistemaSolidos->toggleViento();
 		cout << "pum";
 		break;
 	case 'X': // Aplicar fuerza temporal hacia arriba

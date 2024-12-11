@@ -30,7 +30,7 @@ public:
 
     void crearSuelo() {
         PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0, 0, 0 }));
-        PxShape* shapeSuelo = CreateShape(PxBoxGeometry(100, 0.1, 100));
+        PxShape* shapeSuelo = CreateShape(PxBoxGeometry(1000, 0.1, 20));
         suelo->attachShape(*shapeSuelo);
         gScene->addActor(*suelo);
         new RenderItem(shapeSuelo, suelo, { 0.8f, 0.8f, 0.8f, 1.0f });
