@@ -144,7 +144,7 @@ void initPhysics(bool interactive)
 	//ejeZ = new RenderItem(shape, new PxTransform(v3.x, v3.y, v3.z), Vector4(0, 0, 1, 1));
 	//particula = new Particle(new PxTransform(0, 0, 0), Vector3{2,0,0}, Vector3{1,0,0});
 	 sistemaParticulas = new SistemaParticulas();
-	 
+	 sistemaParticulas->añadirGenerador('g', sistemaSolidos);
 	}
 
 
@@ -260,11 +260,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case 'L':
 		sistemaSolidos->player[0]->moverIzquierda(10.0f);
-		sistemaParticulas->añadirGenerador('g',true,sistemaSolidos);
+		sistemaParticulas->cambio(true);
 		break;
 	case 'R':
 		sistemaSolidos->player[0]->moverDerecha(10.0f);
-		sistemaParticulas->añadirGenerador('g',false,sistemaSolidos);
+		sistemaParticulas->cambio(false);
 		break;
 	//case 'e':
 		//sistemaParticulas->activarExplosion(Vector3(0, 0, 0));

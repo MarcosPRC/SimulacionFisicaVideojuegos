@@ -18,6 +18,7 @@ private:
     vector<GeneradorParticulas*> generadores;
     
 public:
+    Vector3 pos;
     SistemaSolidoRigido* sistemaSo;
     Particle* p2;
     Particle* p1;
@@ -47,7 +48,16 @@ public:
         for (auto generador : generadores)
             delete generador;
     };
-
+    void cambio(bool izq) {
+        if (izq)
+        {
+            pos = Vector3(pos.x, pos.y, pos.z -2);
+        }
+        else {
+            pos = Vector3(pos.x, pos.y, pos.z  +2);
+        }
+        
+    }
 	void update(double tiempo) {
 
 		for (auto e : generadores) {
@@ -73,8 +83,8 @@ public:
         }*/
 	}
 
-    void añadirGenerador(char l,bool izq, SistemaSolidoRigido*sis) {
-        Vector3 pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z);
+    void añadirGenerador(char l, SistemaSolidoRigido*sis) {
+         pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z);
         switch (l) {
             
         case 'f': // Fuente
@@ -88,16 +98,9 @@ public:
             
             break;
         case 'g': // Grifo
-            
-            if (izq)
-            {
-                pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z + 2);
-            }
-            else {
-                pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z - 2);
-            }
-            borrarGeneradores();
-            generadores.push_back(new GeneradorParticulas(pos, 'g'));
+                pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y+ 5, sis->player[0]->Getpos().z);
+            //borrarGeneradores();
+            generadores.push_back(new GeneradorParticulas(pos, 'f'));
             generadores.back()->crearGrifo();
             break;
         case 'c': // Cohete
