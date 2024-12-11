@@ -5,10 +5,10 @@
 
 void SistemaParticulas::borrarGeneradores()
 {
-	for (auto g : generadores) {
+	/*for (auto g : generadores) {
 		delete g;
 	}
-	generadores.clear();
+	generadores.clear();*/
 }
 void SistemaParticulas::GenerateElasticSpringDemo() {
     muelle2 = true;

@@ -88,7 +88,6 @@ void initPhysics(bool interactive)
 	PxVec3 velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
 	PxVec3 velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
 	PxReal densidad = 1.0f;                  // Densidad del material
-
 	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({1,1,0,1}), true);
 
 	PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 35.0f };
@@ -229,41 +228,43 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}*/
 
 	case '1':
-		sistemaParticulas->añadirGenerador('f');
+		//sistemaParticulas->añadirGenerador('f');
 		break;
 	case '2':
-		sistemaParticulas->añadirGenerador('g');
+		//sistemaParticulas->añadirGenerador('f');
 		break;
 	case '3':
-		sistemaParticulas->añadirGenerador('c');
+		//sistemaParticulas->añadirGenerador('c');
 		break;
 	case '4':
-		sistemaParticulas->añadirGenerador('e');
+		//sistemaParticulas->añadirGenerador('e');
 		break;
 	case '5':
-		sistemaParticulas->GenerateSpringDemo();
+		//sistemaParticulas->GenerateSpringDemo();
 		break;
 	case '6':
-		sistemaParticulas->GenerateElasticSpringDemo();
+		//sistemaParticulas->GenerateElasticSpringDemo();
 		break;
 	case '9':
 		//sistemaSolidos->toggleViento();
 		cout << "pum";
 		break;
 	case 'X': // Aplicar fuerza temporal hacia arriba
-		sistemaParticulas->aplicarFuerzaTemporal(Vector3(0.0f, -50.0f, 0.0f), 0.2); // Fuerza de 50 unidades por 0.2 segundos
+		//sistemaParticulas->aplicarFuerzaTemporal(Vector3(0.0f, -50.0f, 0.0f), 0.2); // Fuerza de 50 unidades por 0.2 segundos
 		break;
 	case 'C': // Incrementar constante del resorte
-		sistemaParticulas->modificarConstanteMuelle(1.0); // Aumentar k en 1.0
+		//sistemaParticulas->modificarConstanteMuelle(1.0); // Aumentar k en 1.0
 		break;
 	case 'V': // Decrementar constante del resorte
-		sistemaParticulas->modificarConstanteMuelle(-1.0); // Reducir k en 1.0
+		//sistemaParticulas->modificarConstanteMuelle(-1.0); // Reducir k en 1.0
 		break;
 	case 'L':
 		sistemaSolidos->player[0]->moverIzquierda(10.0f);
+		sistemaParticulas->añadirGenerador('g',true,sistemaSolidos);
 		break;
 	case 'R':
 		sistemaSolidos->player[0]->moverDerecha(10.0f);
+		sistemaParticulas->añadirGenerador('g',false,sistemaSolidos);
 		break;
 	//case 'e':
 		//sistemaParticulas->activarExplosion(Vector3(0, 0, 0));

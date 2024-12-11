@@ -65,6 +65,7 @@ public:
     void detener() {
         actor->setLinearVelocity(PxVec3(0, 0, 0));
     }
+    Vector3 Getpos() {return actor->getGlobalPose().p ; }
     void moverIzquierda(float velocidad) {
         PxVec3 posicion = actor->getGlobalPose().p;
         if (posicion.z < 17) { // Verificar límite izquierdo

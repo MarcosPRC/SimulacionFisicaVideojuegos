@@ -9,6 +9,7 @@
 #include "Particle.h"
 #include "SpringForceGenerator.h"
 #include "ElasticSpringFG.h"
+#include "SistemaSolidoRigido.h"
 //#include "Explosion.h"
 using namespace std;
 class SistemaParticulas
@@ -17,6 +18,7 @@ private:
     vector<GeneradorParticulas*> generadores;
     
 public:
+    SistemaSolidoRigido* sistemaSo;
     Particle* p2;
     Particle* p1;
     SpringForceGenerator* _spring1;
@@ -51,7 +53,7 @@ public:
 		for (auto e : generadores) {
 			e->update(tiempo);
 		}
-        gravedad->aplicarFuerza();
+        //gravedad->aplicarFuerza();
         /*if (muelle1)
         {
            
@@ -71,8 +73,10 @@ public:
         }*/
 	}
 
-    void añadirGenerador(char l) {
+    void añadirGenerador(char l,bool izq, SistemaSolidoRigido*sis) {
+        Vector3 pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z);
         switch (l) {
+            
         case 'f': // Fuente
             borrarGeneradores();
             generador = new GeneradorParticulas(Vector3(0, 0, 0), 'f');
@@ -84,8 +88,16 @@ public:
             
             break;
         case 'g': // Grifo
+            
+            if (izq)
+            {
+                pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z + 2);
+            }
+            else {
+                pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z - 2);
+            }
             borrarGeneradores();
-            generadores.push_back(new GeneradorParticulas(Vector3(0, 5, 0), 'g'));
+            generadores.push_back(new GeneradorParticulas(pos, 'g'));
             generadores.back()->crearGrifo();
             break;
         case 'c': // Cohete

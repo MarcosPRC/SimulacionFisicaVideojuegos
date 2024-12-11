@@ -19,7 +19,7 @@ void Particle::integrate(double t)
 {
 	if (spring != nullptr)
 	{
-		spring->actualizarFuerza(this);
+		//spring->actualizarFuerza(this);
 	}
 	// Actualiza vel
 	//vel += acceleracion * t;
