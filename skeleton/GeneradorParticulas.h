@@ -16,6 +16,7 @@ public:
 	GeneradorParticulas(Vector3 pos, char tipo) {
 		Tipo = tipo;
 		posInicial = pos;
+		_pos = pos;
 		tiempo = 0.0;
 	}
 	~GeneradorParticulas() {
@@ -32,8 +33,9 @@ public:
 	Vector3 distribucionNormal(Vector3 media, double varianza);
 
 	void crearFuente();
-	void crearGrifo();
+	void crearGrifo(Vector3 pos);
 	void crearCohete();
 	void crearExplosion();
+	Vector3 _pos;
 };
 

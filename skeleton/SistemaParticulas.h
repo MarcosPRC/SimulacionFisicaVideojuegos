@@ -15,9 +15,10 @@ using namespace std;
 class SistemaParticulas
 {
 private:
-    vector<GeneradorParticulas*> generadores;
+    
     
 public:
+    vector<GeneradorParticulas*> generadores;
     Vector3 pos;
     SistemaSolidoRigido* sistemaSo;
     Particle* p2;
@@ -98,10 +99,10 @@ public:
             
             break;
         case 'g': // Grifo
-                pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y+ 5, sis->player[0]->Getpos().z);
+                pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z);
             //borrarGeneradores();
-            generadores.push_back(new GeneradorParticulas(pos, 'f'));
-            generadores.back()->crearGrifo();
+            generadores.push_back(new GeneradorParticulas(pos, 'g'));
+            generadores.back()->crearGrifo(pos);
             break;
         case 'c': // Cohete
             borrarGeneradores();

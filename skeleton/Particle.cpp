@@ -4,7 +4,7 @@
 #include "SpringForceGenerator.h"
 Particle::Particle(physx::PxTransform* pos, Vector3 vel, Vector3 accel, double vida, double m, Vector4 color) : pose(pos), vel(vel), acceleracion(accel), tiempoVida(vida),masaa(m),Color(color)
 {
-	PxShape* shape = CreateShape(PxSphereGeometry(1));
+	PxShape* shape = CreateShape(PxSphereGeometry(0.5));
 	renderItem = new RenderItem(shape, pose, Color);
 	fuerza = Vector3(0, 0, 0);
 }

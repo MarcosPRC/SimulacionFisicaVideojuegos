@@ -5,7 +5,7 @@ void GeneradorParticulas::update(double tiempo) {
     switch (Tipo)
     {
     case 'g':
-        crearGrifo();
+        crearGrifo(_pos);
         break;
     case 'f':
 
@@ -48,12 +48,12 @@ void GeneradorParticulas::crearFuente() {
     Lparticulas.push_back(nuevaParticula);
 }
 
-void GeneradorParticulas::crearGrifo() {
+void GeneradorParticulas::crearGrifo(Vector3 pos) {
     Vector3 posVariada = posInicial + distribucionNormal(Vector3(0,0,0), 0.5); 
     Vector3 aceleracion(0, -10.0, 0);
     Vector3 velocidad = distribucionNormal(velocidad, 1.0); 
-    physx::PxTransform* nuevaPos = new physx::PxTransform(posVariada.x, posVariada.y, posVariada.z);
-    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 2.0, 0.5, Vector4(0.7, 0.7, 1, 1));
+    physx::PxTransform* nuevaPos = new physx::PxTransform(pos.x, pos.y -2 , pos.z);
+    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 0.5, 0.5, Vector4(0.7, 0.7, 1, 1));
     Lparticulas.push_back(nuevaParticula);
 }
 
