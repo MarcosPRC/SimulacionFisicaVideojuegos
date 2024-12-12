@@ -90,13 +90,13 @@ void initPhysics(bool interactive)
 	PxReal densidad = 1.0f;                  // Densidad del material
 	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({0,0.7,1,1}), 0,2);
 	
-	PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 33.0f };
+	PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 38.0f };
 	PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };
 	float distanciaMinima = 12.0f; // Distancia mínima entre obstáculos
 	Vector4 color = { 0.0f, 1.0f, 0.0f, 1.0f };
 	sistemaSolidos->generarObstaculosConDistancia(dimensionesPlano, dimensionesObstaculo, distanciaMinima, densidad, color);
 	
-	PxVec3 dimensionesP = { 1000.0f, 0.1f, 35.0f };
+	PxVec3 dimensionesP = { 1000.0f, 0.1f, 38.0f };
 	PxVec3 dimensionesObstaculoP = { 1.0f, 1.0f, 1.0f };
 	float distanciaMinimaEnemigos = 30.0f; // Distancia mínima mayor para los obstáculos enemigos
 	PxReal densidadP = 1.0f; // Densidad del material
@@ -284,13 +284,22 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 {
+	bool enemigo = false;
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
 	for (size_t i = 0; i < sistemaSolidos->solidosDinamicos.size(); i++)
 	{
 		if (sistemaSolidos->solidosDinamicos[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicos[i]->getActor() == actor2)
 		{
-			if (actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC)
+			for (size_t i = 0; i < sistemaSolidos->solidosDinamicosEnemigos.size(); i++)
+			{
+				if (sistemaSolidos->solidosDinamicosEnemigos[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicosEnemigos[i]->getActor() == actor2)
+				{
+					enemigo = true;
+				}
+			}
+
+			if ((actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC) && !enemigo)
 			{
 				sistemaSolidos->solidosDinamicos[i]->_tiempoVida = 0;
 			}
