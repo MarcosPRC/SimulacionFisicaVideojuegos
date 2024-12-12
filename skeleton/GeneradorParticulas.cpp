@@ -53,7 +53,7 @@ void GeneradorParticulas::crearGrifo(Vector3 pos) {
     Vector3 aceleracion(0, -10.0, 0);
     Vector3 velocidad = distribucionNormal(velocidad, 1.0); 
     physx::PxTransform* nuevaPos = new physx::PxTransform(pos.x +2, pos.y -1.5 , pos.z);
-    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 1.0, 0.5, Vector4(0.7, 0.7, 1, 1));
+    Particle* nuevaParticula = new Particle(nuevaPos, velocidad, aceleracion, 0.5, 0.5, Vector4(0.7, 0.7, 1, 1));
     Lparticulas.push_back(nuevaParticula);
 }
 
