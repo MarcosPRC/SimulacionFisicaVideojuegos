@@ -16,7 +16,7 @@
 #include "SolidoRigido.h"
 #include "SistemaSolidoRigido.h"
 #include "WindRigid.h"
-std::string display_text = "This is a test";
+std::string display_text = "puntos: ";
 
 
 using namespace physx;
@@ -45,6 +45,7 @@ std::vector<Proyectil*> proyectiles; //p1.2
 SistemaParticulas* sistemaParticulas;
 ForceGenerator* gravedad = nullptr;
 SistemaSolidoRigido* sistemaSolidos;
+int puntos = 0;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -161,6 +162,7 @@ void initPhysics(bool interactive)
 // t: time passed since last call in milliseconds
 void stepPhysics(bool interactive, double t)
 {
+	display_text = "puntos: " + std::to_string(puntos);
 	PX_UNUSED(interactive);
 	//particula->integrate(t);
 	gScene->simulate(t);
@@ -287,24 +289,28 @@ void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 	bool enemigo = false;
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
-	for (size_t i = 0; i < sistemaSolidos->solidosDinamicos.size(); i++)
+	for (size_t i = 0; i < sistemaSolidos->solidosDinamicosEnemigos.size(); i++)
 	{
-		if (sistemaSolidos->solidosDinamicos[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicos[i]->getActor() == actor2)
+		if (sistemaSolidos->solidosDinamicosEnemigos[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicosEnemigos[i]->getActor() == actor2)
 		{
-			for (size_t i = 0; i < sistemaSolidos->solidosDinamicosEnemigos.size(); i++)
+			enemigo = true;
+		}
+	}
+	if (!enemigo)
+	{
+		for (size_t i = 0; i < sistemaSolidos->solidosDinamicos.size(); i++)
+		{
+			if (sistemaSolidos->solidosDinamicos[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicos[i]->getActor() == actor2)
 			{
-				if (sistemaSolidos->solidosDinamicosEnemigos[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicosEnemigos[i]->getActor() == actor2)
+				if ((actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC))
 				{
-					enemigo = true;
+					sistemaSolidos->solidosDinamicos[i]->_tiempoVida = 0;
+					puntos++;
 				}
-			}
-
-			if ((actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC) && !enemigo)
-			{
-				sistemaSolidos->solidosDinamicos[i]->_tiempoVida = 0;
 			}
 		}
 	}
+	
 	
 }
 

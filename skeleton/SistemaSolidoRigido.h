@@ -12,12 +12,13 @@ private:
     PxScene* gScene;
     PxPhysics* gPhysics;
     PxMaterial* materialBase;
-
+    
     double tiemporegen = 10;
     int regen = 0;
     WindRigid* viento;                          
 
 public:
+    int puntos = 0;
     std::vector<SolidoRigido*> solidosDinamicos; // Sólidos dinámicos
     std::vector<SolidoRigido*> player; // player
     std::vector<SolidoRigido*> solidosDinamicosEnemigos; // Enemigos
@@ -228,6 +229,7 @@ public:
 
                 delete* it;
                 it = solidosDinamicos.erase(it);
+                puntos++;
             }
             else {
                 ++it;
@@ -237,6 +239,7 @@ public:
             if ((*it)->_debeDestruirse(timepo)) {
                 delete* it;
                 it = solidosDinamicosEnemigos.erase(it);
+                puntos++;
             }
             else {
                 ++it;
