@@ -19,12 +19,11 @@ private:
 
 public:
     int puntos = 0;
-    std::vector<SolidoRigido*> solidosDinamicos; // Sólidos dinámicos
+    std::vector<SolidoRigido*> solidosDinamicos;
     std::vector<SolidoRigido*> player; // player
     std::vector<SolidoRigido*> solidosDinamicosEnemigos; // Enemigos
     SistemaSolidoRigido(PxScene* scene, PxPhysics* physics, WindRigid* wind)
         : gScene(scene), gPhysics(physics), viento(wind) {
-        // Crear material base con coeficientes iniciales
         srand(static_cast<unsigned int>(time(NULL)));
         materialBase = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
         
@@ -103,19 +102,17 @@ public:
         }
 
         if (esRojo == 0) {
-            // Desactivar colisión con los verdes
             for (auto& verde : solidosDinamicos) {
                 desactivarColision(solido->getActor(), verde->getActor());
             }
-            solidosDinamicosEnemigos.push_back(solido); // Agregar a rojos
+            solidosDinamicosEnemigos.push_back(solido);
         }
         else if (esRojo == 1)
         {
-            // Desactivar colisión con los rojos
             for (auto& rojo : solidosDinamicosEnemigos) {
                 desactivarColision(solido->getActor(), rojo->getActor());
             }
-            solidosDinamicos.push_back(solido); // Agregar a verdes
+            solidosDinamicos.push_back(solido);
         }
     }
     void generarObstaculosConDistancia(const PxVec3& dimensionesPlano, const PxVec3& dimensionesObstaculo,
@@ -127,26 +124,22 @@ public:
         float zMin = -dimensionesPlano.z / 2;
         float zMax = dimensionesPlano.z / 2;
 
-        // Vector para almacenar posiciones ya generadas
         std::vector<PxVec3> posicionesGeneradas;
 
-        // Generar obstáculos aleatoriamente
         for (int i = 0; i < 100; ++i) {
             PxVec3 posicion;
             bool posicionValida;
 
             do {
                 posicionValida = true;
-                // Generar posición aleatoria dentro de los límites del plano
                 posicion = {
                     xMin + static_cast<float>(rand()) / RAND_MAX * (xMax - xMin),
-                    dimensionesObstaculo.y / 2, // Elevar obstáculo para que repose sobre el suelo
+                    dimensionesObstaculo.y / 2,
                     zMin + static_cast<float>(rand()) / RAND_MAX * (zMax - zMin)
                 };
 
-                // Verificar que la posición cumple con la distancia mínima respecto a las existentes
                 for (const auto& posExistente : posicionesGeneradas) {
-                    if ((posicion - posExistente).magnitude() < distanciaMinima || posicion.x > 20) {
+                    if ((posicion - posExistente).magnitude() < distanciaMinima || posicion.x > 0) {
                         posicionValida = false;
                         break;
                     }
@@ -154,10 +147,8 @@ public:
 
             } while (!posicionValida);
 
-            // Guardar posición válida
             posicionesGeneradas.push_back(posicion);
 
-            // Crear el sólido dinámico en la posición generada
             generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, color, 1,1);
         }
     }
@@ -169,26 +160,23 @@ public:
         float zMin = -dimensionesPlano.z / 2;
         float zMax = dimensionesPlano.z / 2;
 
-        // Vector para almacenar posiciones ya generadas
         std::vector<PxVec3> posicionesGeneradas;
 
-        // Generar enemigos aleatoriamente
-        for (int i = 0; i < 20; ++i) { // Menos cantidad por la distancia mayor
+        
+        for (int i = 0; i < 20; ++i) {
             PxVec3 posicion;
             bool posicionValida;
 
             do {
                 posicionValida = true;
-                // Generar posición aleatoria dentro de los límites del plano
                 posicion = {
                     xMin + static_cast<float>(rand()) / RAND_MAX * (xMax - xMin),
-                    dimensionesObstaculo.y / 2, // Elevar obstáculo para que repose sobre el suelo
+                    dimensionesObstaculo.y / 2, 
                     zMin + static_cast<float>(rand()) / RAND_MAX * (zMax - zMin)
                 };
 
-                // Verificar que la posición cumple con la distancia mínima respecto a las existentes
                 for (const auto& posExistente : posicionesGeneradas) {
-                    if ((posicion - posExistente).magnitude() < distanciaMayor || posicion.x > 20) {
+                    if ((posicion - posExistente).magnitude() < distanciaMayor || posicion.x > 0) {
                         posicionValida = false;
                         break;
                     }
@@ -196,10 +184,8 @@ public:
 
             } while (!posicionValida);
 
-            // Guardar posición válida
             posicionesGeneradas.push_back(posicion);
 
-            // Crear el enemigo rojo en la posición generada
             generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, colorRojo,1, 0);
         }
     }
