@@ -88,7 +88,7 @@ void initPhysics(bool interactive)
 
 
 	//---------------------------PRACTICA FINAL---------------------------
-	vientoR = new WindRigid({ 250 , 0,0 }, 0.5f, 0.3f, { -500000, 0, -5000000 }, { 500000, 500, 5000000 }, play);
+	vientoR = new WindRigid({ 300 , 0,0 }, 0.5f, 0.3f, { -500000, 0, -5000000 }, { 500000, 500, 5000000 }, play);
 	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics, vientoR);
 	sistemaSolidos->crearSuelo();
 	PxVec3 posicionInicial = { 550, 0, 0 };   // Altura inicial para evitar colisión inmediata
@@ -96,7 +96,7 @@ void initPhysics(bool interactive)
 	PxVec3 velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
 	PxVec3 velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
 	PxReal densidad = 1.0f;                  // Densidad del material
-	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 2);
+	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 24,false);
 
 	PxVec3 dimensionesPlano = { 4000.0f, 0.1f, 38.0f };
 	PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };
@@ -161,7 +161,7 @@ void initPhysics(bool interactive)
 	//ejeZ = new RenderItem(shape, new PxTransform(v3.x, v3.y, v3.z), Vector4(0, 0, 1, 1));
 	//particula = new Particle(new PxTransform(0, 0, 0), Vector3{2,0,0}, Vector3{1,0,0});
 	 sistemaParticulas = new SistemaParticulas();
-	 sistemaParticulas->añadirGenerador('g', sistemaSolidos);
+	 sistemaParticulas->añadirGenerador('g', sistemaSolidos,0);
 	}
 
 
@@ -177,7 +177,7 @@ void level() {
 	PxVec3 velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
 	PxVec3 velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
 	PxReal densidad = 1.0f;                  // Densidad del material
-	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 2);
+	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 2,false);
 
 	PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 38.0f };
 	PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };
@@ -193,7 +193,7 @@ void level() {
 
 
 	sistemaSolidos->generarObstaculosEnemigosConDistancia(dimensionesP, dimensionesObstaculoP, distanciaMinimaEnemigos, densidadP, colorEnemigos);
-	sistemaParticulas->añadirGenerador('g', sistemaSolidos);
+	sistemaParticulas->añadirGenerador('g', sistemaSolidos,0);
 }
 void stepPhysics(bool interactive, double t)
 {
@@ -213,16 +213,18 @@ void stepPhysics(bool interactive, double t)
 	}
 	if (enddd && !para)
 	{
-		sistemaParticulas->añadirGenerador('c', sistemaSolidos);
+		sistemaParticulas->añadirGenerador('c', sistemaSolidos,1);
 		delete sistemaSolidos->player[0];
 		play = false;
 		display_text = "¡Perdiste el juego con: " + std::to_string(puntos) + "puntos!";
 		para = true;
 	}
-	if (victory)
+	if (victory &&!para)
 	{
+		sistemaParticulas->añadirGenerador('c', sistemaSolidos,0);
 		play = false;
 		display_text = "¡Ganaste el juego con: " + std::to_string(puntos) + "puntos!";
+		para = true;
 	}
 	PX_UNUSED(interactive);
 	//particula->integrate(t);
@@ -360,6 +362,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 {
 	bool enemigo = false;
+	bool verde = false;
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
 	for (size_t i = 0; i < sistemaSolidos->solidosDinamicosEnemigos.size(); i++)
@@ -373,6 +376,7 @@ void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 			}
 		}
 	}
+	
 	if (!enemigo)
 	{
 		for (size_t i = 0; i < sistemaSolidos->solidosDinamicos.size(); i++)
@@ -386,6 +390,35 @@ void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 				}
 			}
 		}
+	}
+	/*for (size_t i = 0; i < sistemaSolidos->solidosDinamicos.size(); i++)
+	{
+		if (sistemaSolidos->solidosDinamicos[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicos[i]->getActor() == actor2)
+		{
+			if ((actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC))
+			{
+				verde = true;
+				break;
+			}
+			
+		}
+	}*/
+	for (size_t i = 0; i < sistemaSolidos->solidosDinamicosWin.size(); i++)
+	{
+			if (sistemaSolidos->solidosDinamicosWin[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicosWin[i]->getActor() == actor2)
+			{
+				if (sistemaSolidos->player[0]->getActor() == actor1 || sistemaSolidos->player[0]->getActor() == actor2)
+				{
+					if (sistemaSolidos->solidosDinamicos[i]->getActor() != actor1 && sistemaSolidos->solidosDinamicos[i]->getActor() != actor2)
+					{
+						if ((actor1->getType() != PxActorType::eRIGID_STATIC && actor2->getType() != PxActorType::eRIGID_STATIC))
+						{
+							victory = true;
+						}
+						
+					}
+				}
+			}
 	}
 	
 	

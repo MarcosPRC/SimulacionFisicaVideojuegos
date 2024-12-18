@@ -288,6 +288,7 @@
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="SistemaParticulas.h" />
+    <ClInclude Include="SistemaSolidoRigido.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Torbellino.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SistemaSolidoRigido.h" />

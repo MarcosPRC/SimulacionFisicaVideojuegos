@@ -84,7 +84,7 @@ public:
         }*/
 	}
 
-    void añadirGenerador(char l, SistemaSolidoRigido*sis) {
+    void añadirGenerador(char l, SistemaSolidoRigido*sis, int auxxxx) {
          pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z);
         switch (l) {
             
@@ -108,7 +108,7 @@ public:
             pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z);
             borrarGeneradores();
             generadores.push_back(new GeneradorParticulas(Vector3(0, 0, 0), 'c'));
-            generadores.back()->crearCohete(pos);
+            generadores.back()->crearCohete(pos, auxxxx);
             break;
        // case 'e':
             //borrarGeneradores();

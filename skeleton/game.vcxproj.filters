@@ -51,6 +51,7 @@
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SolidoRigido.h" />
     <ClInclude Include="U:\hlocal\SimulacionFisicaVideojuegos\skeleton\SistemaSolidoRigido.h" />
     <ClInclude Include="WindRigid.h" />
+    <ClInclude Include="SistemaSolidoRigido.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
