@@ -58,7 +58,7 @@ public:
     }
     void moverDerecha(float velocidad) {
         PxVec3 posicion = actor->getGlobalPose().p;
-        if (posicion.z > -17) { // Verificar límite derecho
+        if (posicion.z > -15) { // Verificar límite derecho
             actor->setLinearVelocity(PxVec3( 0, 0, -velocidad));
         }
         else {
@@ -71,7 +71,7 @@ public:
     Vector3 Getpos() {return actor->getGlobalPose().p ; }
     void moverIzquierda(float velocidad) {
         PxVec3 posicion = actor->getGlobalPose().p;
-        if (posicion.z < 17) { // Verificar límite izquierdo
+        if (posicion.z < 15) { // Verificar límite izquierdo
             actor->setLinearVelocity(PxVec3( 0, 0, velocidad));
         }
         else {

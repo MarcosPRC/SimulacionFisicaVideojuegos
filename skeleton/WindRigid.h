@@ -8,7 +8,7 @@ using namespace physx;
 class WindRigid {
 public:
     WindRigid(Vector3 velocidadViento, float k1, float k2, Vector3 areaMinima, Vector3 areaMaxima, bool modeloSimple)
-        : velocidadViento(velocidadViento), k1(k1), k2(k2), areaMinima(areaMinima), areaMaxima(areaMaxima), modeloSimple(modeloSimple), activo(true) {}
+        : velocidadViento(velocidadViento), k1(k1), k2(k2), areaMinima(areaMinima), areaMaxima(areaMaxima), modeloSimple(true), activo(modeloSimple) {}
 
     // Aplicar fuerza de viento a un sólido rígido
     void aplicarFuerza(PxRigidDynamic* solido) const {
@@ -28,7 +28,6 @@ public:
 
         solido->addForce(PxVec3(fuerza.x, fuerza.y, fuerza.z), PxForceMode::eFORCE);
     }
-
     // Activa o desactiva el viento
     void toggleActivo() { activo = !activo; }
     bool isActivo() const { return activo; }
@@ -47,5 +46,6 @@ private:
             posicion.z >= areaMinima.z && posicion.z <= areaMaxima.z);
     }
 };
+
 
 

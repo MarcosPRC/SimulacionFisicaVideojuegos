@@ -16,7 +16,7 @@ private:
     double tiemporegen = 10;
     int regen = 0;
     WindRigid* viento;                          
-
+    int lvl = 0;
 public:
     int puntos = 0;
     std::vector<SolidoRigido*> solidosDinamicos;
@@ -68,7 +68,7 @@ public:
     }
     void crearSuelo() {
         PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0, 0, 0 }));
-        PxShape* shapeSuelo = CreateShape(PxBoxGeometry(1000, 0.1, 20));
+        PxShape* shapeSuelo = CreateShape(PxBoxGeometry(2000, 0.1, 20));
         suelo->attachShape(*shapeSuelo);
         gScene->addActor(*suelo);
         new RenderItem(shapeSuelo, suelo, { 0.545f, 0.271f, 0.075f, 1.0f });
@@ -91,7 +91,7 @@ public:
            t = 10000.0;
         }
         else {
-           t = 20.0;
+           t = 100.0;
         }
 
         SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, pos, velInicial, velAngular, dimensiones, masa,color, Player,t);
@@ -118,11 +118,17 @@ public:
     void generarObstaculosConDistancia(const PxVec3& dimensionesPlano, const PxVec3& dimensionesObstaculo,
         float distanciaMinima, PxReal densidad, const Vector4& color)
     {
+        float xMin;
+        float xMax;
+        float zMin;
+        float zMax;
         // Limites del plano
-        float xMin = -dimensionesPlano.x / 2;
-        float xMax = dimensionesPlano.x / 2;
-        float zMin = -dimensionesPlano.z / 2;
-        float zMax = dimensionesPlano.z / 2;
+            xMin = -dimensionesPlano.x / 2;
+            xMax = dimensionesPlano.x / 2;
+            zMin = -dimensionesPlano.z / 2;
+            zMax = dimensionesPlano.z / 2;
+     
+        
 
         std::vector<PxVec3> posicionesGeneradas;
 
@@ -139,7 +145,7 @@ public:
                 };
 
                 for (const auto& posExistente : posicionesGeneradas) {
-                    if ((posicion - posExistente).magnitude() < distanciaMinima || posicion.x > 0) {
+                    if ((posicion - posExistente).magnitude() < distanciaMinima || posicion.x > 500) {
                         posicionValida = false;
                         break;
                     }
@@ -155,15 +161,19 @@ public:
     void generarObstaculosEnemigosConDistancia(const PxVec3& dimensionesPlano, const PxVec3& dimensionesObstaculo,
         float distanciaMayor, PxReal densidad, const Vector4& colorRojo) {
         // Limites del plano
-        float xMin = -dimensionesPlano.x / 2;
-        float xMax = dimensionesPlano.x / 2;
-        float zMin = -dimensionesPlano.z / 2;
-        float zMax = dimensionesPlano.z / 2;
+        float xMin;
+        float xMax;
+        float zMin;
+        float zMax;
 
+            xMin = -dimensionesPlano.x / 2;
+            xMax = dimensionesPlano.x / 2;
+            zMin = -dimensionesPlano.z / 2;
+            zMax = dimensionesPlano.z / 2;
         std::vector<PxVec3> posicionesGeneradas;
 
         
-        for (int i = 0; i < 20; ++i) {
+        for (int i = 0; i < 50; ++i) {
             PxVec3 posicion;
             bool posicionValida;
 
@@ -176,7 +186,7 @@ public:
                 };
 
                 for (const auto& posExistente : posicionesGeneradas) {
-                    if ((posicion - posExistente).magnitude() < distanciaMayor || posicion.x > 0) {
+                    if ((posicion - posExistente).magnitude() < distanciaMayor || posicion.x > 500) {
                         posicionValida = false;
                         break;
                     }
@@ -225,7 +235,16 @@ public:
             if ((*it)->_debeDestruirse(timepo)) {
                 delete* it;
                 it = solidosDinamicosEnemigos.erase(it);
-                puntos++;
+            }
+            else {
+                ++it;
+            }
+        }
+        for (auto it = player.begin(); it != player.end();) {
+            if ((*it)->_debeDestruirse(timepo)) {
+
+                delete* it;
+                it = player.erase(it);
             }
             else {
                 ++it;

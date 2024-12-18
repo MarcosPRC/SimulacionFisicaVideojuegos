@@ -62,18 +62,17 @@ double numeroAleatorioEntre0y1() {
     std::uniform_real_distribution<double> distribucion(0.0, 1.0);
     return distribucion(generador);
 }
-void GeneradorParticulas::crearCohete() {
-    Vector3 aceleracion(0, -10.0, 0);
-    Vector3 velocidad(0, 30.0, 0); 
+void GeneradorParticulas::crearCohete(Vector3 pos) {
+    Vector3 aceleracion(0, 0.0, 0);
+    Vector3 velocidad(10, 10.0, 10);
     physx::PxTransform* nuevaPos = new physx::PxTransform(posInicial.x, posInicial.y, posInicial.z);
-    Particle* cohete = new Particle(nuevaPos, velocidad, aceleracion, 3.0, 0.5, Vector4(0, 0, 0, 1));
-    Lparticulas.push_back(cohete);
-    Vector3 posExplosion = cohete->getPosition();
+    //Particle* cohete = new Particle(nuevaPos, velocidad, aceleracion, 3.0, 0.5, Vector4(0, 0, 0, 1));
+    //Lparticulas.push_back(cohete);
 
         for (int i = 0; i < 150; ++i) {
-            Vector3 velocidadExplosion = distribucionNormal(Vector3(10, 10, 10), 5.0);
-            physx::PxTransform* nuevaPosExplosion = new physx::PxTransform(posExplosion.x, posExplosion.y, posExplosion.z);
-            Particle* particulaExplosion = new Particle(nuevaPosExplosion, velocidadExplosion, Vector3(0, -10.0, 0), 5.0, 0.5, Vector4(numeroAleatorioEntre0y1(),numeroAleatorioEntre0y1(), numeroAleatorioEntre0y1(), 1.0));
+            Vector3 velocidadExplosion = distribucionNormal(Vector3(0, 1, 0), 2.0);
+            physx::PxTransform* nuevaPosExplosion = new physx::PxTransform(pos.x, pos.y, pos.z);
+            Particle* particulaExplosion = new Particle(nuevaPosExplosion, velocidadExplosion, Vector3(0, -10.0, 0), 3.0, 0.5, Vector4(numeroAleatorioEntre0y1(),numeroAleatorioEntre0y1(),1, 1.0));
             Lparticulas.push_back(particulaExplosion);
         }
 }

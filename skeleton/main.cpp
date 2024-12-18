@@ -16,7 +16,7 @@
 #include "SolidoRigido.h"
 #include "SistemaSolidoRigido.h"
 #include "WindRigid.h"
-std::string display_text = "puntos: ";
+std::string display_text = "Presiona espacio para empezar el juego";
 
 
 using namespace physx;
@@ -41,10 +41,17 @@ RenderItem* ejeX;//p0
 RenderItem* ejeY;//p0
 RenderItem* ejeZ;//p0
 Particle* particula;//p1.1
+//banderas
+bool start = false;
+bool enddd = false;
+bool play = false;
+bool victory = false;
+bool para = false;
 std::vector<Proyectil*> proyectiles; //p1.2
 SistemaParticulas* sistemaParticulas;
 ForceGenerator* gravedad = nullptr;
 SistemaSolidoRigido* sistemaSolidos;
+WindRigid* vientoR;
 int puntos = 0;
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -81,30 +88,31 @@ void initPhysics(bool interactive)
 
 
 	//---------------------------PRACTICA FINAL---------------------------
-	WindRigid* vientoR = new WindRigid({300 , 0,0 }, 0.5f, 0.3f, { -500000, 0, -5000000 }, { 500000, 500, 5000000 }, true);
-	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics,vientoR);
+	vientoR = new WindRigid({ 250 , 0,0 }, 0.5f, 0.3f, { -500000, 0, -5000000 }, { 500000, 500, 5000000 }, play);
+	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics, vientoR);
 	sistemaSolidos->crearSuelo();
-	PxVec3 posicionInicial = { 90, 0, 0 };   // Altura inicial para evitar colisión inmediata
+	PxVec3 posicionInicial = { 550, 0, 0 };   // Altura inicial para evitar colisión inmediata
 	PxVec3 dimensiones = { 1.5,2, 1.5 };        // Dimensiones del cubo
 	PxVec3 velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
 	PxVec3 velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
 	PxReal densidad = 1.0f;                  // Densidad del material
-	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({0,0.7,1,1}), 0,2);
-	
-	PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 38.0f };
+	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 2);
+
+	PxVec3 dimensionesPlano = { 4000.0f, 0.1f, 38.0f };
 	PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };
 	float distanciaMinima = 12.0f; // Distancia mínima entre obstáculos
 	Vector4 color = { 0.0f, 1.0f, 0.0f, 1.0f };
 	sistemaSolidos->generarObstaculosConDistancia(dimensionesPlano, dimensionesObstaculo, distanciaMinima, densidad, color);
-	
-	PxVec3 dimensionesP = { 1000.0f, 0.1f, 38.0f };
+
+	PxVec3 dimensionesP = { 4000.0f, 0.1f, 38.0f };
 	PxVec3 dimensionesObstaculoP = { 1.0f, 1.0f, 1.0f };
 	float distanciaMinimaEnemigos = 30.0f; // Distancia mínima mayor para los obstáculos enemigos
 	PxReal densidadP = 1.0f; // Densidad del material
 	Vector4 colorEnemigos = { 1.0f, 0.0f, 0.0f, 1.0f }; // Color rojo para los enemigos
 
-	
+
 	sistemaSolidos->generarObstaculosEnemigosConDistancia(dimensionesP, dimensionesObstaculoP, distanciaMinimaEnemigos, densidadP, colorEnemigos);
+
 	//------PRACTICA SOLIDOSRIGIDOS-------
 	////Generar suelo
 	//PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
@@ -160,17 +168,70 @@ void initPhysics(bool interactive)
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
+void level() {
+	vientoR = new WindRigid({ 250 , 0,0 }, 0.5f, 0.3f, { -500000, 0, -5000000 }, { 500000, 500, 5000000 }, play);
+	sistemaSolidos = new SistemaSolidoRigido(gScene, gPhysics, vientoR);
+	sistemaSolidos->crearSuelo();
+	PxVec3 posicionInicial = { 90, 0, 0 };   // Altura inicial para evitar colisión inmediata
+	PxVec3 dimensiones = { 1.5,2, 1.5 };        // Dimensiones del cubo
+	PxVec3 velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
+	PxVec3 velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
+	PxReal densidad = 1.0f;                  // Densidad del material
+	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 2);
+
+	PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 38.0f };
+	PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };
+	float distanciaMinima = 12.0f; // Distancia mínima entre obstáculos
+	Vector4 color = { 0.0f, 1.0f, 0.0f, 1.0f };
+	sistemaSolidos->generarObstaculosConDistancia(dimensionesPlano, dimensionesObstaculo, distanciaMinima, densidad, color);
+
+	PxVec3 dimensionesP = { 1000.0f, 0.1f, 38.0f };
+	PxVec3 dimensionesObstaculoP = { 1.0f, 1.0f, 1.0f };
+	float distanciaMinimaEnemigos = 30.0f; // Distancia mínima mayor para los obstáculos enemigos
+	PxReal densidadP = 1.0f; // Densidad del material
+	Vector4 colorEnemigos = { 1.0f, 0.0f, 0.0f, 1.0f }; // Color rojo para los enemigos
+
+
+	sistemaSolidos->generarObstaculosEnemigosConDistancia(dimensionesP, dimensionesObstaculoP, distanciaMinimaEnemigos, densidadP, colorEnemigos);
+	sistemaParticulas->añadirGenerador('g', sistemaSolidos);
+}
 void stepPhysics(bool interactive, double t)
 {
-	display_text = "puntos: " + std::to_string(puntos);
+	
+	if (play && start)
+	{
+		
+		start = false;
+	}
+	if (play)
+	{
+		display_text = "puntos: " + std::to_string(puntos);
+		sistemaSolidos->pdate(t);
+
+		sistemaParticulas->generadores[0]->_pos = Vector3(sistemaSolidos->player[0]->Getpos().x, sistemaSolidos->player[0]->Getpos().y, sistemaSolidos->player[0]->Getpos().z);
+		sistemaSolidos->aplicarFuerzas();
+	}
+	if (enddd && !para)
+	{
+		sistemaParticulas->añadirGenerador('c', sistemaSolidos);
+		delete sistemaSolidos->player[0];
+		play = false;
+		display_text = "¡Perdiste el juego con: " + std::to_string(puntos) + "puntos!";
+		para = true;
+	}
+	if (victory)
+	{
+		play = false;
+		display_text = "¡Ganaste el juego con: " + std::to_string(puntos) + "puntos!";
+	}
 	PX_UNUSED(interactive);
 	//particula->integrate(t);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	sistemaParticulas->update(t);
-	sistemaSolidos->pdate(t);
+	
 	//GetCamera()->MueveCamara();
-	sistemaParticulas->generadores[0]->_pos = Vector3(sistemaSolidos->player[0]->Getpos().x, sistemaSolidos->player[0]->Getpos().y, sistemaSolidos->player[0]->Getpos().z);
+	
 	//for (auto proyectil : proyectiles) {
 	//	proyectil->disparar(t);  // Actualiza la física del proyectil
 	//}
@@ -184,7 +245,7 @@ void stepPhysics(bool interactive, double t)
 		PxReal densidad = float(rand() % 10 + 1);
 		sistemaSolidos->generarSolidoDinamico(pos, dimensiones, densidad, velInicial, velAngular);
 	}*/
-	sistemaSolidos->aplicarFuerzas();
+	
 	//sistemaSolidos->borrarCadaCincoSegundos(t);
 }
 
@@ -211,6 +272,7 @@ void cleanupPhysics(bool interactive)
 	
 	gFoundation->release();
 	}
+
 
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
@@ -269,15 +331,26 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//sistemaParticulas->modificarConstanteMuelle(-1.0); // Reducir k en 1.0
 		break;
 	case 'L':
-		sistemaSolidos->player[0]->moverIzquierda(10.0f);
-		
+		if (play) {
+			sistemaSolidos->player[0]->moverIzquierda(10.0f);
+		}
 		break;
 	case 'R':
-		sistemaSolidos->player[0]->moverDerecha(10.0f);
+		if (play)
+		{
+			sistemaSolidos->player[0]->moverDerecha(10.0f);
+		}
+		
 		
 		break;
-	//case 'e':
-		//sistemaParticulas->activarExplosion(Vector3(0, 0, 0));
+	case 'M':
+		if (!start && !play)
+		{
+			start = true;
+			play = true;
+			vientoR->toggleActivo();
+		}
+		break;
 	default:
 		sistemaSolidos->player[0]->detener();
 		break;
@@ -294,6 +367,10 @@ void onCollision(physx::PxRigidActor* actor1, physx::PxRigidActor* actor2)
 		if (sistemaSolidos->solidosDinamicosEnemigos[i]->getActor() == actor1 || sistemaSolidos->solidosDinamicosEnemigos[i]->getActor() == actor2)
 		{
 			enemigo = true;
+			if (enemigo && (sistemaSolidos->player[0]->getActor() == actor1 || sistemaSolidos->player[0]->getActor() == actor2))
+			{
+				enddd = true;
+			}
 		}
 	}
 	if (!enemigo)

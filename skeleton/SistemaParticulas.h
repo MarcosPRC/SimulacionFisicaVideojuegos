@@ -105,9 +105,10 @@ public:
             generadores.back()->crearGrifo(pos);
             break;
         case 'c': // Cohete
+            pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z);
             borrarGeneradores();
             generadores.push_back(new GeneradorParticulas(Vector3(0, 0, 0), 'c'));
-            generadores.back()->crearCohete();
+            generadores.back()->crearCohete(pos);
             break;
        // case 'e':
             //borrarGeneradores();

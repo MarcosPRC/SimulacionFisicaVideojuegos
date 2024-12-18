@@ -34,7 +34,7 @@ public:
 
 	void crearFuente();
 	void crearGrifo(Vector3 pos);
-	void crearCohete();
+	void crearCohete(Vector3 pos);
 	void crearExplosion();
 	Vector3 _pos;
 };
