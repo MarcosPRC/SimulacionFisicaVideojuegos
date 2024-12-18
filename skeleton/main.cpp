@@ -16,7 +16,7 @@
 #include "SolidoRigido.h"
 #include "SistemaSolidoRigido.h"
 #include "WindRigid.h"
-std::string display_text = "Presiona espacio para empezar el juego";
+std::string display_text = "Presiona M para empezar el juego";
 
 
 using namespace physx;
