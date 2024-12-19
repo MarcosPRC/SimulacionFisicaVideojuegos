@@ -1,8 +1,9 @@
 # SimulacionFisicaVideojuegos
 Repositorio de las prácticas de la asignatura de Simulación Física de Videojuegos
 
-En la carpeta skeleton estará vuestro código fuente
-
-Necesitaréis además descomprimir el archivo que se indica a continuación en la raíz del repositorio:
-
-Carpetas bin y common https://ucomplutense-my.sharepoint.com/:f:/g/personal/liagar05_ucm_es/ElNxHPmZVj9Ni9-8FKTKp7cBJHAarnL3vvEvG50z0QMrzg
+Para iniciar el juego se ha de pulsar la tecla “espacio”.
+Para mover al jugador hacia los lados se usa la tecla “A” para el movimiento hacia la izquierda y la tecla “D” para el movimiento hacia la derecha.
+Para añadir los muelles, los cuales dan dificultad extra a la hora de esquivar los obstáculos se usa la tecla “V”.
+Si chocas con un objeto rojo, mueres.
+Si chocas con un objeto verde, sumas 1 punto.
+Si chocas con el obstáculo amarillo te dará la victoria.
