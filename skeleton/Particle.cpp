@@ -2,9 +2,9 @@
 #include <iostream>
 #include <math.h>
 #include "SpringForceGenerator.h"
-Particle::Particle(physx::PxTransform* pos, Vector3 vel, Vector3 accel, double vida, double m, Vector4 color) : pose(pos), vel(vel), acceleracion(accel), tiempoVida(vida),masaa(m),Color(color)
+Particle::Particle(physx::PxTransform* pos, Vector3 vel, Vector3 accel, double vida, double m, Vector4 color, float tam) : pose(pos), vel(vel), acceleracion(accel), tiempoVida(vida),masaa(m),Color(color), Tam(tam)
 {
-	PxShape* shape = CreateShape(PxSphereGeometry(0.5));
+	PxShape* shape = CreateShape(PxSphereGeometry(tam));
 	renderItem = new RenderItem(shape, pose, Color);
 	fuerza = Vector3(0, 0, 0);
 }

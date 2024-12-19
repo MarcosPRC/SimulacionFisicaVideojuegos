@@ -30,6 +30,7 @@ public:
     ForceGenerator* torbellino = nullptr;
     SpringForceGenerator* resorte;
     Particle* particula;
+    Particle* particula2;
     std::vector<Particle*> _springParticles;
     std::vector<SpringForceGenerator*>  _springForces;
     bool muelle1 = false; 
@@ -65,16 +66,19 @@ public:
 			e->update(tiempo);
 		}
         //gravedad->aplicarFuerza();
-        /*if (muelle1)
+        if (muelle1)
         {
            
             resorte->actualizarFuerza(particula);
+            resorte->actualizarFuerza(particula2);
             if (tiempoRestanteFuerza > 0.0) {
                 particula->aplicarFuerza(fuerzaTemporal);
+                particula2->aplicarFuerza(-fuerzaTemporal);
                 tiempoRestanteFuerza -= tiempo;
             }
             particula->integrate(tiempo);
-        }*/
+            particula2->integrate(tiempo);
+        }
         
         //viento->aplicarFuerza();
         //torbellino->aplicarFuerza();
@@ -126,7 +130,7 @@ public:
         }
     }*/
     void borrarGeneradores();
-    void GenerateSpringDemo();
+    void GenerateSpringDemo(Vector3 pos);
     void GenerateElasticSpringDemo();
 
     void SistemaParticulas::aplicarFuerzaTemporal(const Vector3& fuerza, double duracion) {

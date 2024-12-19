@@ -19,7 +19,7 @@ void SistemaParticulas::GenerateElasticSpringDemo() {
         Vector3(0, 0, 0),                          
         10.0,                                       
         1.0,                                       
-        Vector4(1.0, 0.0, 0.0, 1.0)                
+        Vector4(1.0, 0.0, 0.0, 1.0), 0.5
     );
 
     Particle* p2e = new Particle(
@@ -28,7 +28,7 @@ void SistemaParticulas::GenerateElasticSpringDemo() {
         Vector3(0, 0, 0),                          
         10.0,                                       
         2.0,                                       
-        Vector4(0.0, 0.0, 1.0, 1.0)                
+        Vector4(0.0, 0.0, 1.0, 1.0), 0.5
     );
 
     SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2e);
@@ -45,7 +45,7 @@ void SistemaParticulas::GenerateElasticSpringDemo() {
         Vector3(0, 0, 0),
         10.0,
         0.85,
-        Vector4(0.0, 0.0, 1.0, 1.0)
+        Vector4(0.0, 0.0, 1.0, 1.0), 0.5
     );
 
     ElasticSpringFG* f3 = new ElasticSpringFG(1, 10,{10.0,20.0,0.0});
@@ -55,15 +55,16 @@ void SistemaParticulas::GenerateElasticSpringDemo() {
     p3e->añadirFuerzas(f3);
 
 }
-void SistemaParticulas::GenerateSpringDemo() {
+void SistemaParticulas::GenerateSpringDemo(Vector3 pos) {
     muelle1 = true;
     // Crear la partícula
-    physx::PxTransform* posicion = new physx::PxTransform(0.0f, 10.0f, 0.0f);
-    particula = new Particle(posicion, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f), 60.0, 1.0, Vector4(0.7, 0.7, 1, 1));
-
+    physx::PxTransform* posicion = new physx::PxTransform(pos.x, 10, pos.z +10);
+    physx::PxTransform* posicion2 = new physx::PxTransform(pos.x,10, pos.z - 10);
+    particula = new Particle(posicion, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f), 60.0, 1.0, Vector4(0.40, 0.55, 0.50, 1),2);
+    particula2 = new Particle(posicion2, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f), 60.0, 1.0, Vector4(0.40, 0.55, 0.50, 1), 2);
 
     // Crear el resorte conectado a un punto fijo
-    resorte = new SpringForceGenerator(10.0, 5.0, new Particle(new physx::PxTransform(0.0f, 15.0f, 0.0f), Vector3(0.0f), Vector3(0.0f), 0.0f, 0.0f, Vector4(1, 0, 0, 1))); // Longitud reposo = 5.0, k = 10.0
+    resorte = new SpringForceGenerator(1.0, 4.0, new Particle(new physx::PxTransform(pos.x, 10, pos.z), Vector3(0.0f), Vector3(0.0f), 60.0f, 1.0f, Vector4(0.50, 0.45, 0.55, 1), 2)); // Longitud reposo = 5.0, k = 10.0
 
     // Inicializar la fuerza temporal
     fuerzaTemporal = Vector3(0.0f, 0.0f, 0.0f);

@@ -7,7 +7,7 @@ class SpringForceGenerator;
 class Particle
 {
 public:
-	Particle(physx::PxTransform* pos, Vector3 vel, Vector3 accel, double vida,double m, Vector4 Color);
+	Particle(physx::PxTransform* pos, Vector3 vel, Vector3 accel, double vida,double m, Vector4 Color, float tam);
 	~Particle();
 
 	void integrate(double t);
@@ -22,6 +22,7 @@ private:
 	Vector3 vel;
 	Vector3 fuerza;
 	physx::PxTransform* pose;
+	float Tam;
 	RenderItem* renderItem = nullptr;
 	double tiempoVida;
 	double tiempoExistencia;

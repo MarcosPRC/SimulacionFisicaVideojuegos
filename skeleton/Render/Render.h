@@ -48,7 +48,7 @@
 #include <string>
 
 extern std::string display_text;
-
+extern int pos_display;
 namespace Snippets
 {
 void setupDefaultWindow(const char* name);

@@ -16,7 +16,8 @@
 #include "SolidoRigido.h"
 #include "SistemaSolidoRigido.h"
 #include "WindRigid.h"
-std::string display_text = "Presiona espacio para empezar el juego, pulsa A y D para propulsarte hacia los lados";
+int pos_display = 100;
+std::string display_text = "Presiona espacio para empezar el juego, pulsa A y D para propulsarte hacia los lados, si quieres aumentar la dificultad pulsa V";
 
 using namespace physx;
 
@@ -46,6 +47,7 @@ bool enddd = false;
 bool play = false;
 bool victory = false;
 bool para = false;
+bool dificultad = false;
 std::vector<Proyectil*> proyectiles; //p1.2
 SistemaParticulas* sistemaParticulas;
 ForceGenerator* gravedad = nullptr;
@@ -193,6 +195,7 @@ void level() {
 
 	sistemaSolidos->generarObstaculosEnemigosConDistancia(dimensionesP, dimensionesObstaculoP, distanciaMinimaEnemigos, densidadP, colorEnemigos);
 	sistemaParticulas->añadirGenerador('g', sistemaSolidos,0);
+	
 }
 void stepPhysics(bool interactive, double t)
 {
@@ -203,6 +206,7 @@ void stepPhysics(bool interactive, double t)
 	}
 	if (play)
 	{
+		pos_display = 245;
 		display_text = "puntos: " + std::to_string(puntos);
 		sistemaSolidos->pdate(t);
 
@@ -214,14 +218,16 @@ void stepPhysics(bool interactive, double t)
 		sistemaParticulas->añadirGenerador('c', sistemaSolidos,1);
 		delete sistemaSolidos->player[0];
 		play = false;
-		display_text = "¡Perdiste el juego con: " + std::to_string(puntos) + "puntos!";
+		pos_display = 220;
+		display_text = "¡Perdiste el juego con: " + std::to_string(puntos) + " puntos!";
 		para = true;
 	}
 	if (victory &&!para)
 	{
 		sistemaParticulas->añadirGenerador('c', sistemaSolidos,0);
 		play = false;
-		display_text = "¡Ganaste el juego con: " + std::to_string(puntos) + "puntos!";
+		pos_display = 220;
+		display_text = "¡Ganaste el juego con: " + std::to_string(puntos) + " puntos!";
 		para = true;
 	}
 	PX_UNUSED(interactive);
@@ -327,18 +333,24 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'C': // Incrementar constante del resorte
 		//sistemaParticulas->modificarConstanteMuelle(1.0); // Aumentar k en 1.0
 		break;
-	case 'V': // Decrementar constante del resorte
-		//sistemaParticulas->modificarConstanteMuelle(-1.0); // Reducir k en 1.0
+	case 'V': // añadir dificultad
+		if (!dificultad)
+		{
+			dificultad = true;
+			sistemaParticulas->GenerateSpringDemo(Vector3(sistemaSolidos->player[0]->Getpos().x, sistemaSolidos->player[0]->Getpos().y, sistemaSolidos->player[0]->Getpos().z));
+		}
 		break;
 	case 'A':
 		if (play) {
 			sistemaSolidos->player[0]->moverIzquierda(10.0f);
+			sistemaParticulas->aplicarFuerzaTemporal(Vector3(0.0f, 0.0f, 20.0f), 0.05);
 		}
 		break;
 	case 'D':
 		if (play)
 		{
 			sistemaSolidos->player[0]->moverDerecha(10.0f);
+			sistemaParticulas->aplicarFuerzaTemporal(Vector3(0.0f, 0.0f, -20.0f), 0.05);
 		}
 		
 		
