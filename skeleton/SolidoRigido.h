@@ -13,7 +13,7 @@ private:
     PxShape* shape;
 public:
     double _tiempoVida;
-    SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, const PxVec3& position, const PxVec3& linearVelocity, const PxVec3& angularVelocity, const PxVec3& dimensions,double masa, Vector4 color, int Player, double t) {
+    SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, const PxVec3& position, const PxVec3& linearVelocity, const PxVec3& angularVelocity, const PxVec3& dimensions,double masa, Vector4 color, int Player, double t, bool cuadrado) {
         _tiempoVida = t;
         
         actor = gPhysics->createRigidDynamic(PxTransform(position));
@@ -36,7 +36,13 @@ public:
         PxMaterial* material = gPhysics->createMaterial(0.5f, 0.5f, 0.0f); // Restitución (bounciness) = 0.0f
 
         // Crear la forma del objeto
-        shape = CreateShape(PxBoxGeometry(dimensions.x, dimensions.y, dimensions.z), material);
+        if (cuadrado)
+        {
+            shape = CreateShape(PxBoxGeometry(dimensions.x, dimensions.y, dimensions.z), material);
+        }
+        else {
+            shape = CreateShape(PxSphereGeometry(dimensions.x * 4),material);
+        }
         actor->attachShape(*shape);
 
        //agregar inercia manual

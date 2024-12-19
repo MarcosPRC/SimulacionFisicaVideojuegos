@@ -97,8 +97,14 @@ void initPhysics(bool interactive)
 	PxVec3 velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
 	PxVec3 velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
 	PxReal densidad = 1.0f;                  // Densidad del material
-	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 24,false);
-
+	
+	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 24,false,true);
+	posicionInicial = { -100, 0, 0 };   // Altura inicial para evitar colisión inmediata
+	dimensiones = { 1,1, 1};        // Dimensiones del cubo
+	velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
+	velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
+	densidad = 1.0f;
+	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 1,0,0,1 }), 1, 0, false, false);
 	PxVec3 dimensionesPlano = { 4000.0f, 0.1f, 38.0f };
 	PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };
 	float distanciaMinima = 12.0f; // Distancia mínima entre obstáculos
@@ -178,7 +184,7 @@ void level() {
 	PxVec3 velocidadInicial = { 0, 0, 0 };  // Movimiento hacia adelante en el eje X
 	PxVec3 velocidadAngular = { 0, 0, 0 };   // Sin rotación inicial
 	PxReal densidad = 1.0f;                  // Densidad del material
-	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 2,false);
+	sistemaSolidos->generarSolidoDinamico(posicionInicial, dimensiones, densidad, velocidadInicial, velocidadAngular, Vector4({ 0,0.7,1,1 }), 0, 2,false,true);
 
 	PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 38.0f };
 	PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };

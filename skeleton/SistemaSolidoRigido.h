@@ -52,7 +52,7 @@ public:
         new RenderItem(shapeObstaculo, obstaculo, { 0.5f, 0.5f, 0.5f, 1.0f });
     }
     double t;
-    void generarSolidoDinamico(const PxVec3& pos, const PxVec3& dimensiones, PxReal densidad, const PxVec3& velInicial, const PxVec3& velAngular, Vector4 color, int Player, int esRojo,bool vict) {
+    void generarSolidoDinamico(const PxVec3& pos, const PxVec3& dimensiones, PxReal densidad, const PxVec3& velInicial, const PxVec3& velAngular, Vector4 color, int Player, int esRojo,bool vict, bool cuadrado) {
         float volumen = dimensiones.x * dimensiones.y * dimensiones.z * 8;
         double masa = densidad * volumen;
         if (Player == 0)
@@ -64,7 +64,7 @@ public:
            t = 60.0;
         }
 
-        SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, pos, velInicial, velAngular, dimensiones, masa,color, Player,t);
+        SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, pos, velInicial, velAngular, dimensiones, masa,color, Player,t,cuadrado);
         if (Player == 0)
         {
 
@@ -135,7 +135,7 @@ public:
 
             posicionesGeneradas.push_back(posicion);
 
-            generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, color, 1,1,false);
+            generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, color, 1,1,false,true);
         }
     }
    
@@ -173,7 +173,7 @@ public:
             } while (!posicionValida);
 
             posicionesGeneradas.push_back(posicion);
-            generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, colorRojo, 1, 0,false);
+            generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, colorRojo, 1, 0,false,true);
 
             if (player.size() > 0 && (posicion.x - player[0]->getActor()->getGlobalPose().p.x) <
                 (posicionMasAlejada.x - player[0]->getActor()->getGlobalPose().p.x)) {
@@ -182,14 +182,14 @@ public:
         }
 
         // Crear la fila de bloques amarillos a lo largo del eje Z
-        float distanciaLineal = 20.0f;
+        float distanciaLineal = 50.0f;
         PxVec3 posicionInicioAmarillos = posicionMasAlejada + PxVec3(distanciaLineal, 0, 0);
         Vector4 colorAmarillo = { 1.0f, 1.0f, 0.0f, 1.0f }; // Color amarillo
         int cantidadBloquesFila = static_cast<int>(dimensionesPlano.z / dimensionesObstaculo.z);
 
         for (int i = 0; i < cantidadBloquesFila; ++i) {
             PxVec3 posicion = posicionInicioAmarillos + PxVec3(0, 0, (i - cantidadBloquesFila / 2) * dimensionesObstaculo.z * 2);
-            generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, colorAmarillo, 1, 2, true);
+            generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, colorAmarillo, 1, 2, true,true);
         }
     }
 
