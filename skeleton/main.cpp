@@ -16,8 +16,7 @@
 #include "SolidoRigido.h"
 #include "SistemaSolidoRigido.h"
 #include "WindRigid.h"
-std::string display_text = "Presiona M para empezar el juego";
-
+std::string display_text = "Presiona espacio para empezar el juego, pulsa A y D para propulsarte hacia los lados";
 
 using namespace physx;
 
@@ -197,7 +196,6 @@ void level() {
 }
 void stepPhysics(bool interactive, double t)
 {
-	
 	if (play && start)
 	{
 		
@@ -332,12 +330,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'V': // Decrementar constante del resorte
 		//sistemaParticulas->modificarConstanteMuelle(-1.0); // Reducir k en 1.0
 		break;
-	case 'L':
+	case 'A':
 		if (play) {
 			sistemaSolidos->player[0]->moverIzquierda(10.0f);
 		}
 		break;
-	case 'R':
+	case 'D':
 		if (play)
 		{
 			sistemaSolidos->player[0]->moverDerecha(10.0f);
@@ -345,7 +343,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		
 		
 		break;
-	case 'M':
+	case ' ':
 		if (!start && !play)
 		{
 			start = true;
