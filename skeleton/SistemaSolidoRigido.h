@@ -35,37 +35,6 @@ public:
     }
     void pdate(double t) {
         _destruir(t);
-        //tiemporegen -= t;
-        //if (tiemporegen <= 0)
-        //{
-        //    PxVec3 dimensionesPlano = { 1000.0f, 0.1f, 33.0f };
-        //    PxVec3 dimensionesObstaculo = { 1.0f, 1.0f, 1.0f };
-        //    PxReal densidad = 1.0f;
-        //    float distanciaMinima = 12.0f; // Distancia mínima entre obstáculos
-        //    Vector4 color = { 0.0f, 1.0f, 0.0f, 1.0f };
-        //    generarObstaculosConDistancia(dimensionesPlano, dimensionesObstaculo, distanciaMinima, densidad, color);
-
-        //    PxVec3 dimensionesP = { 1000.0f, 0.1f, 35.0f };
-        //    PxVec3 dimensionesObstaculoP = { 1.0f, 1.0f, 1.0f };
-        //    float distanciaMinimaEnemigos = 30.0f; // Distancia mínima mayor para los obstáculos enemigos
-        //    PxReal densidadP = 1.0f; // Densidad del material
-        //    Vector4 colorEnemigos = { 1.0f, 0.0f, 0.0f, 1.0f }; // Color rojo para los enemigos
-
-
-        //    
-        //    
-        //    generarObstaculosEnemigosConDistancia(dimensionesP, dimensionesObstaculoP, distanciaMinimaEnemigos, densidadP, colorEnemigos);
-        //    tiemporegen = 10;
-        //    regen++;
-        //    if (regen >= 3)
-        //    {
-        //        tiemporegen = 10000;
-        //    }
-        //    else {
-
-        //    }
-        //    
-        //}
     }
     void crearSuelo() {
         PxRigidStatic* suelo = gPhysics->createRigidStatic(PxTransform({ 0, 0, 0 }));
@@ -89,10 +58,10 @@ public:
         if (Player == 0)
         {
 
-           t = 10000.0;
+           t = 80.0;
         }
         else {
-           t = 100.0;
+           t = 60.0;
         }
 
         SolidoRigido* solido = new SolidoRigido(gPhysics, gScene, pos, velInicial, velAngular, dimensiones, masa,color, Player,t);
@@ -206,7 +175,6 @@ public:
             posicionesGeneradas.push_back(posicion);
             generarSolidoDinamico(posicion, dimensionesObstaculo, densidad, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, colorRojo, 1, 0,false);
 
-            // Actualizar la posición más alejada basada en X desde el jugador
             if (player.size() > 0 && (posicion.x - player[0]->getActor()->getGlobalPose().p.x) <
                 (posicionMasAlejada.x - player[0]->getActor()->getGlobalPose().p.x)) {
                 posicionMasAlejada = posicion;
@@ -265,6 +233,15 @@ public:
             if ((*it)->_debeDestruirse(timepo)) {
                 delete* it;
                 it = solidosDinamicosEnemigos.erase(it);
+            }
+            else {
+                ++it;
+            }
+        }
+        for (auto it = solidosDinamicosWin.begin(); it != solidosDinamicosWin.end();) {
+            if ((*it)->_debeDestruirse(timepo)) {
+                delete* it;
+                it = solidosDinamicosWin.erase(it);
             }
             else {
                 ++it;

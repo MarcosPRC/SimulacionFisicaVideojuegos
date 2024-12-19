@@ -8,15 +8,14 @@ class SolidoRigido
 
 private:
    
-	PxRigidDynamic* actor;   // Actor dinámico de PhysX
-	RenderItem* renderItem; // Item de renderizado
+	PxRigidDynamic* actor;   
+	RenderItem* renderItem; 
     PxShape* shape;
 public:
     double _tiempoVida;
-    // Constructor
     SolidoRigido(PxPhysics* gPhysics, PxScene* gScene, const PxVec3& position, const PxVec3& linearVelocity, const PxVec3& angularVelocity, const PxVec3& dimensions,double masa, Vector4 color, int Player, double t) {
         _tiempoVida = t;
-        // Crear el actor dinámico
+        
         actor = gPhysics->createRigidDynamic(PxTransform(position));
         
         // Bloquear todas las rotaciones
@@ -51,18 +50,17 @@ public:
         renderItem = new RenderItem(shape, actor,color);
     }
 
-    // Destructor
     ~SolidoRigido() {
         DeregisterRenderItem(renderItem);
         renderItem = nullptr;
     }
     void moverDerecha(float velocidad) {
         PxVec3 posicion = actor->getGlobalPose().p;
-        if (posicion.z > -15) { // Verificar límite derecho
+        if (posicion.z > -15) { 
             actor->setLinearVelocity(PxVec3( 0, 0, -velocidad));
         }
         else {
-            detener(); // Detener si llega al límite
+            detener(); 
         }
     }
     void detener() {
@@ -71,11 +69,11 @@ public:
     Vector3 Getpos() {return actor->getGlobalPose().p ; }
     void moverIzquierda(float velocidad) {
         PxVec3 posicion = actor->getGlobalPose().p;
-        if (posicion.z < 15) { // Verificar límite izquierdo
+        if (posicion.z < 15) { 
             actor->setLinearVelocity(PxVec3( 0, 0, velocidad));
         }
         else {
-            detener(); // Detener si llega al límite
+            detener(); 
         }
     }
 

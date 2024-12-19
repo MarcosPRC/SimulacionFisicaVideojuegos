@@ -8,11 +8,11 @@ class GeneradorParticulas
 private:
 	Vector3 posInicial;
 	double tiempo;
-	list<Particle*> Lparticulas;
+	vector<Particle*> Lparticulas;
 	default_random_engine generator;
 	char Tipo;
 public:
-	list<Particle*> GetLparticulas() { return Lparticulas; }
+	vector<Particle*> GetLparticulas() { return Lparticulas; }
 	GeneradorParticulas(Vector3 pos, char tipo) {
 		Tipo = tipo;
 		posInicial = pos;

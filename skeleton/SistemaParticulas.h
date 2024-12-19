@@ -96,7 +96,7 @@ public:
             borrarGeneradores();
             generador = new GeneradorParticulas(Vector3(0, 0, 0), 'f');
             generadores.push_back(generador);
-            gravedad->registrarSistema(generador);
+            
             viento->registrarSistema(generador);
             torbellino->registrarSistema(generador);
             generadores.back()->crearFuente();
@@ -106,6 +106,7 @@ public:
                 pos = Vector3(sis->player[0]->Getpos().x, sis->player[0]->Getpos().y, sis->player[0]->Getpos().z);
             //borrarGeneradores();
             generadores.push_back(new GeneradorParticulas(pos, 'g'));
+            //gravedad->registrarSistema(generador);
             generadores.back()->crearGrifo(pos);
             break;
         case 'c': // Cohete
